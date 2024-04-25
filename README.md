@@ -2,6 +2,7 @@ Trình bày về MVC Design pattern? Model? Controller? View? Các pattern tươ
 
 
 Mô hình MVC là gì?
+
 ⁃	Mô hình Model-View-Controller (MVC) là một mẫu kiến trúc phân tách một ứng dụng thành ba thành phần logic chính Model, View và Controller. Do đó viết tắt MVC.
 
 ⁃	Mỗi thành phần kiến trúc được xây dựng để xử lý khía cạnh phát triển cụ thể của một ứng dụng.  
