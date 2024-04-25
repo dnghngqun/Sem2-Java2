@@ -2,33 +2,51 @@ Trình bày về MVC Design pattern? Model? Controller? View? Các pattern tươ
 
 
 Mô hình MVC là gì?
-⁃	Mô hình Model-View-Controller (MVC) là một mẫu kiến trúc phân tách một ứng dụng thành ba thành phần logic chính Model, View và Controller. Do đó viết tắt MVC. 
+⁃	Mô hình Model-View-Controller (MVC) là một mẫu kiến trúc phân tách một ứng dụng thành ba thành phần logic chính Model, View và Controller. Do đó viết tắt MVC.
+
 ⁃	Mỗi thành phần kiến trúc được xây dựng để xử lý khía cạnh phát triển cụ thể của một ứng dụng.  
 
+
 MVC ra đời khi nào?
+
 •	Kiến trúc MVC được thảo luận lần đầu vào năm 1979 bởi Trygve Reenskaug.
+
 •	Mô hình MVC được giới thiệu lần đầu tiên vào năm 1987 bằng ngôn ngữ lập trình Smalltalk.
+
 •	MVC lần đầu tiên được chấp nhận như một khái niệm chung, trong một bài báo năm 1988.
+
 •	Trong thời gian gần đây, MVC pattern được sử dụng rộng rãi trong các ứng dụng web hiện đại.
 
 
+
  Kiến trúc MVC
+ 
 <img width="413" alt="image" src="https://github.com/dnghngqun/Sem2-Java2/assets/117747610/953fb748-9a01-42ca-9dd0-4a4c1b131a0f">
 
  
 
 MVC quan trọng bao gồm:
+
 •	Model: Nó bao gồm tất cả dữ liệu và logic liên quan của nó.
+
 •	View: Trình bày dữ liệu cho người dùng hoặc xử lý tương tác của người dùng.
+
 •	Controller: Là phần quan trọng nhất trong mô hình, nó liên kết phần Model và View. 
 
+
 View
+
 •	View là một phần của ứng dụng đại diện cho việc trình bày dữ liệu.
+
 •	View được tạo bởi các dữ liệu mà chúng ta lấy từ dữ liệu trong model. Một view yêu cầu model cung cấp đầy đủ dữ liệu để nó hiển thị đầu ra cho người dùng.
+
 •	View chính là nới chứa những giao diện như một nút bấm, khung nhập, menu, hình ảnh… nó đảm nhiệm nhiệm vụ hiển thị dữ liệu và giúp người dùng tương tác với hệ thống.
 
+
 Controller
+
 •	Controller là một phần của ứng dụng xử lý tương tác của người dùng. Bộ điều khiển diễn giải đầu vào chuột và bàn phím từ người dùng, thông báo cho model và view để thay đổi khi thích hợp.
+
 •	Controller là nơi tiếp nhận những yêu cầu xử lý được gửi từ người dùng, nó sẽ gồm những class/ function xử lý nhiều nghiệp vụ logic giúp lấy đúng dữ liệu thông tin cần thiết nhờ các nghiệp vụ lớp Model cung cấp và hiển thị dữ liệu đó ra cho người dùng nhờ lớp View.
 •	Controller gửi các lệnh đến model để làm thay đổi trạng thái của nó (Ví dụ: ta thêm mới 1 user hoặc cập nhật tên 1 user). Controller cũng gửi các lệnh đến view liên quan của nó để thay đổi cách hiển thị của view (Ví dụ: xem thông tin 1 user). 
 
