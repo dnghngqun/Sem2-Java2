@@ -5,7 +5,16 @@ import session9.entity.Users;
 import java.sql.*;
 
 public class LoginDaoImpl implements LoginDAO{
-    private static final Connection conn = null;
+    private static final Connection conn;
+
+    static {
+        try {
+            conn = MySQLConnectionDB.getMyConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     PreparedStatement pstm = null;
     Statement stm = null;
     public LoginDaoImpl() throws SQLException{}
@@ -50,12 +59,12 @@ public class LoginDaoImpl implements LoginDAO{
         return "Not in the database";
     }
 
-    public static void main(String[] args) throws SQLException {
-        Users users = new Users(1, "admin", "admin");
-
-        LoginDaoImpl loginDao = new LoginDaoImpl();
-        System.out.println(loginDao.checkLoginPreparedStatement(users));
-        System.out.println(loginDao.checkLoginStatement(users));
-
-    }
+//    public static void main(String[] args) throws SQLException {
+//        Users users = new Users(1, "admin", "admin");
+//
+//        LoginDaoImpl loginDao = new LoginDaoImpl();
+//        System.out.println(loginDao.checkLoginPreparedStatement(users));
+//        System.out.println(loginDao.checkLoginStatement(users));
+//
+//    }
 }

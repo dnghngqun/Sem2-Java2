@@ -11,6 +11,9 @@ public class Users {
         this.password = password;
     }
 
+    public Users() {
+    }
+
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
