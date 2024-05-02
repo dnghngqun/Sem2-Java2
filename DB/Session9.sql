@@ -9,3 +9,5 @@ CREATE TABLE users(
 INSERT INTO users VALUES(1, 'admin', 'admin');
 
 SELECT username FROM users WHERE username like 'admin' AND password like 'admin'
+
+SELECT * FROM customers ;

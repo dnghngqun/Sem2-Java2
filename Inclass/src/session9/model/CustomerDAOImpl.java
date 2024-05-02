@@ -1,0 +1,66 @@
+package session9.model;
+
+import session9.entity.Customers;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class CustomerDAOImpl implements CustomerDAO{
+    private static final Connection conn;
+
+    static {
+        try {
+            conn = MySQLConnectionDB.getMyConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    PreparedStatement pstm = null;
+
+    public CustomerDAOImpl() throws SQLException {
+    }
+
+    @Override
+    public ArrayList<Customers> getAllCustomers() throws SQLException {
+        String query = "SELECT * FROM customers";
+        pstm = conn.prepareStatement(query);
+
+        ResultSet rs = pstm.executeQuery();
+
+        ArrayList<Customers> customers = new ArrayList<>();
+
+        while(rs.next()) {
+            int cusID = rs.getInt("customer_id");
+            String cusFName = rs.getString("first_name");
+            String cusLName = rs.getString("last_name");
+            String cusEmail = rs.getString("email");
+            customers.add(new Customers(cusID, cusFName, cusLName, cusEmail));
+        }
+
+        return customers;
+    }
+
+
+    @Override
+    public Customers findCustomerById(int id) throws SQLException {
+        String query = "SELECT * FROM customers WHERE customer_id = ?";
+        pstm = conn.prepareStatement(query);
+
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+
+        if(rs.next()) {
+            int cusID = rs.getInt("customer_id");
+            String cusFName = rs.getString("first_name");
+            String cusLName = rs.getString("last_name");
+            String cusEmail = rs.getString("email");
+            return new Customers(cusID, cusFName, cusLName, cusEmail);
+        }
+
+        return null;
+    }
+}

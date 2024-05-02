@@ -1,6 +1,9 @@
 package session9.controller;
 
+import session9.entity.Customers;
 import session9.entity.Users;
+import session9.model.CustomerDAO;
+import session9.model.CustomerDAOImpl;
 import session9.model.LoginDaoImpl;
 
 import java.sql.SQLException;
@@ -8,7 +11,6 @@ import java.sql.SQLException;
 public class LoginController {
     //call instance of model step 2
     LoginDaoImpl loginDao = new LoginDaoImpl();
-
     public LoginController() throws SQLException {
     }
 
@@ -24,5 +26,7 @@ public class LoginController {
         String message = loginDao.checkLoginPreparedStatement(users);
         return message;
     }
+
+
 
 }
