@@ -6,7 +6,7 @@ public class OrderDetail {
     private int productId;
     private int quantity;
     private double unitPrice;
-    private double discount;
+    private double discount = 0;
     private double totalPrice;
 
     public void setDiscount(double discount) {
