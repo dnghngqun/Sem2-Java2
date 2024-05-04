@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CustomerDAO {
-    public ArrayList<Customers> getAllCustomers() throws SQLException;
+    ArrayList<Customers> getAllCustomers() throws SQLException;
 
-    public Customers findCustomerById(int id) throws SQLException;
+    Customers findCustomerById(int id) throws SQLException;
+
+    void addCustomer(int id, String fname, String lname, String email) throws SQLException;
+    void removeCustomer(int id) throws SQLException;
 }

@@ -22,5 +22,14 @@ public class CustomerController {
         Customers customers = CustomerDAO.findCustomerById(id);
         return customers;
     }
+
+    public void addCustomer(int id, String fName, String lName, String email) throws SQLException {
+        CustomerDAO.addCustomer(id, fName, lName, email);
+    }
+
+    public void removeCustomer(int id ) throws SQLException {
+        CustomerDAO.removeCustomer(id);
+    }
 }
+
 

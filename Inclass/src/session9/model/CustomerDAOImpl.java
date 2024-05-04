@@ -7,10 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CustomerDAOImpl implements CustomerDAO{
     private static final Connection conn;
-
     static {
         try {
             conn = MySQLConnectionDB.getMyConnection();
@@ -46,7 +46,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 
     @Override
-    public Customers findCustomerById(int id) throws SQLException {
+    public  Customers findCustomerById(int id) throws SQLException {
         String query = "SELECT * FROM customers WHERE customer_id = ?";
         pstm = conn.prepareStatement(query);
 
@@ -62,5 +62,23 @@ public class CustomerDAOImpl implements CustomerDAO{
         }
 
         return null;
+    }
+
+    @Override
+    public void removeCustomer(int id) throws SQLException {
+        String query = "DELETE FROM customers WHERE customer_id = ?";
+        pstm = conn.prepareStatement(query);
+        pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+    @Override
+    public void addCustomer(int id, String fName, String lName, String email) throws SQLException {
+        String query = "INSERT INTO customers(customer_id, first_name,last_name,email) VALUES (?,?,?,?)";
+        pstm = conn.prepareStatement(query);
+        pstm.setInt(1, id);
+        pstm.setString(2, fName);
+        pstm.setString(3, lName);
+        pstm.setString(4, email);
+        pstm.executeUpdate();
     }
 }
