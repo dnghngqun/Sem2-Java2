@@ -1,4 +1,4 @@
 package session10.model;
 
-public class OrderDAO {
+public interface OrderDAO {
 }

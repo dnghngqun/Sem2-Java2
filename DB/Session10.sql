@@ -40,3 +40,5 @@ CREATE TABLE OrderDetail(
 DROP TABLE Order_table;
 DROP TABLE OrderDetail;
 DROP TABLE Product;
+
+SELECT * FROM customers

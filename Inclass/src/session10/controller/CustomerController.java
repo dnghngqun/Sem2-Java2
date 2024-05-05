@@ -1,24 +1,37 @@
 package session10.controller;
 
-import session10.model.CustomerDAO;
+import session10.entity.Customer;
+import session10.model.CustomerDAOImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerController {
-    CustomerDAO CustomerDAO = new CustomerDAO();
+    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
 
     public CustomerController() throws SQLException {
     }
 
-    public void addCustomer(int id, String name, String email, String address) throws SQLException {
-        CustomerDAO.addCustomer(id, name, email, address);
+    public ArrayList<Customer> getAllCustomers() throws SQLException {
+        return customerDAO.getAllCustomers();
     }
 
-    public void updateCustomer(int id, String name, String email, String address) throws SQLException {
-        CustomerDAO.updateCustomer(id, name, email, address);
+    public void addCustomer(Customer customer) throws SQLException {
+        customerDAO.addCustomer(customer);
     }
 
-    public void removeCustomer(int id) throws SQLException {
-        CustomerDAO.removeCustomer(id);
+    public void updateCustomer(Customer customer) throws SQLException {
+        customerDAO.updateCustomer(customer);
+    }
+
+    public boolean removeCustomer(int id) throws SQLException {
+        return customerDAO.removeCustomer(id);
+    }
+    public ArrayList<Customer> getAllCustomer() throws SQLException {
+       return customerDAO.getAllCustomers();
+    }
+
+    public Customer getCustomerById(int id) throws SQLException {
+        return customerDAO.getCustomerById(id);
     }
 }

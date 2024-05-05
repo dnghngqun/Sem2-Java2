@@ -19,35 +19,7 @@ public class ConsoleUI {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    private void addCustomer() throws IOException, SQLException {
-        System.out.print("Enter customer id: ");
-        int id = Integer.parseInt(reader.readLine());
-        System.out.print("Enter customer name: ");
-        String name = reader.readLine();
-        System.out.print("Enter customer address: ");
-        String address = reader.readLine();
-        System.out.print("Enter customer email: ");
-        String email = reader.readLine();
-        cusController.addCustomer(id, name, address, email);
-    }
 
-    private void updateCustomer() throws IOException, SQLException {
-        System.out.print("Enter customer id: ");
-        int id = Integer.parseInt(reader.readLine());
-        System.out.print("Enter customer name: ");
-        String name = reader.readLine();
-        System.out.print("Enter customer address: ");
-        String address = reader.readLine();
-        System.out.print("Enter customer email: ");
-        String email = reader.readLine();
-        cusController.updateCustomer(id, name, address, email);
-    }
-
-    private void deleteCustomer() throws IOException, SQLException {
-        System.out.print("Enter customer id: ");
-        int id = Integer.parseInt(reader.readLine());
-        cusController.removeCustomer(id);
-    }
 
     private int menuCustomer() throws IOException {
         System.out.println("=====================");
@@ -109,13 +81,10 @@ public class ConsoleUI {
             int choice = menuCustomer();
             switch (choice) {
                 case 1:
-                    addCustomer();
                     break;
                 case 2:
-                    updateCustomer();
                     break;
                 case 3:
-                    deleteCustomer();
                     break;
                 case 4:
                     break;
