@@ -1,8 +1,10 @@
 package session10.view;
 
 import session10.controller.CustomerController;
+import session10.controller.OrderController;
 import session10.controller.ProductController;
 import session10.entity.Customer;
+import session10.entity.Order;
 import session10.entity.Product;
 
 import java.io.BufferedReader;
@@ -15,11 +17,12 @@ public class ConsoleUI {
     private final BufferedReader reader;
     CustomerController cusController = new CustomerController();
     ProductController productController = new ProductController();
-
+    OrderController orderController = new OrderController();
     public ConsoleUI() throws SQLException {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+//    Customer
     private void addCustomer() throws SQLException, IOException {
         System.out.print("Enter Customer ID: ");
         int id = Integer.parseInt(reader.readLine());
@@ -100,7 +103,41 @@ public class ConsoleUI {
         return choice;
     }
 
+//    Order
+    private int menuOrder() throws IOException {
+        System.out.println("=====================");
+        System.out.println("1. Add Order");
+        System.out.println("2. Update Order");
+        System.out.println("3. Delete Order");
+        System.out.println("4. Get all Order");
+        System.out.println("5. Get Order by id");
+        System.out.println("6. Get Order by customer ID");
+        System.out.println("7. Exit");
+        System.out.print("Enter your choice: ");
+        int choice = Integer.parseInt(reader.readLine());
+        return choice;
+    }
+    private void updateOrderStatus() throws SQLException, IOException{
 
+        System.out.print("Enter Order ID: ");
+        int OrderId = Integer.parseInt(reader.readLine());
+        System.out.print("Enter Order Status (0: Cancelled 1: Pending 2: Completed): ");
+        int status = Integer.parseInt(reader.readLine());
+        boolean result = orderController.updateOrderStatus(OrderId, status);
+        if(!result){
+            updateOrderStatus();
+        }
+    }
+
+    private void addOrder() throws SQLException, IOException {
+        System.out.println("Enter order ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.println("Enter customer ID: ");
+        int customerId = Integer.parseInt(reader.readLine());
+        Order order = new Order(id, customerId);
+    }
+
+//    Product
     private void getAllProducts() throws SQLException {
         ArrayList<Product> products = productController.getAllProducts();
 
@@ -188,6 +225,7 @@ public class ConsoleUI {
         int choice = Integer.parseInt(reader.readLine());
         return choice;
     }
+
 
     private void choice1() throws IOException, SQLException {
         while (true) {

@@ -13,7 +13,8 @@ CREATE TABLE Order_table(
     id INT PRIMARY KEY,
     customerID INT NOT NULL ,
     orderDate DATE NOT NULL ,
-    totalAmount DOUBLE NOT NULL ,
+    totalAmount DOUBLE ,
+    status VARCHAR(255) NOT NULL ,
     CONSTRAINT cusID FOREIGN KEY (customerID) REFERENCES customers(id)
 );
 
@@ -41,5 +42,18 @@ DROP TABLE Order_table;
 DROP TABLE OrderDetail;
 DROP TABLE Product;
 
-SELECT * FROM customers;
 SELECT * FROM Product;
+SELECT * FROM customers;
+SELECT * FROM Order_table;
+SELECT * FROM OrderDetail;
+
+SELECT o.id AS OrderID,
+       customerID,
+       c.name AS CustomerName,
+       o.orderDate,
+       o.totalAmount,
+       o.status
+FROM Order_table o
+INNER JOIN customers c on o.customerID = c.id
+WHERE o.id = 1;
+

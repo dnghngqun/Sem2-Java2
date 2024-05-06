@@ -8,14 +8,56 @@ public class Order {
     private Date orderDate;
     private double totalAmount;
     private int status;
+    private String statusString;
+
+
+
+    public Order(int customerId, int id) {
+        this.customerId = customerId;
+        this.id = id;
+    }
+
+    public Order(int id, int customerId, Date orderDate, double totalAmount, int status) {
+        this.id = id;
+        this.customerId = customerId;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.status = status;
+    }
+
+    public Order(int id, int customerId, int status) {
+        this.id = id;
+        this.customerId = customerId;
+        this.status = status;
+    }
+
+    public Order(int id, int customerId, Date orderDate, double totalAmount, String statusString) {
+        this.id = id;
+        this.customerId = customerId;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.statusString = statusString;
+    }
+
+    public Order() {
+    }
+
+    public void setStatusString(String statusString) {
+        this.statusString = statusString;
+    }
 
     public void setStatus(int status) {
         this.status = status;
     }
 
+    public String getStatusString() {
+        return statusString = status == 0 ? "Cancelled" : status == 1 ? "Pending" : "Completed";
+    }
+
     public int getStatus() {
         return status;
     }
+
 
     public void setId(int id) {
         this.id = id;
