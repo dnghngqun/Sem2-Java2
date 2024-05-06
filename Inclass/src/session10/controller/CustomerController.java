@@ -25,13 +25,24 @@ public class CustomerController {
     }
 
     public boolean removeCustomer(int id) throws SQLException {
-        return customerDAO.removeCustomer(id);
+        boolean result = customerDAO.removeCustomer(id);
+        if(result) {
+            System.out.println("Customer with ID " + id + " has been successfully removed.");
+        }else {
+            System.out.println("Failed to remove customer with ID " + id + ".");
+        }
+        return result;
     }
+
     public ArrayList<Customer> getAllCustomer() throws SQLException {
        return customerDAO.getAllCustomers();
     }
 
     public Customer getCustomerById(int id) throws SQLException {
         return customerDAO.getCustomerById(id);
+    }
+
+    public ArrayList<Customer> getCustomersByName(String name) throws SQLException {
+        return customerDAO.getCustomersByName(name);
     }
 }

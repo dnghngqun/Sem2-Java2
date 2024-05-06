@@ -61,9 +61,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean removeCustomer(int id) throws SQLException {
         pstm = conn.prepareStatement(SQL_DELETE_CUSTOMER);
         pstm.setInt(1, id);
-        pstm.executeUpdate();
-        System.out.println("Delete Success!");
-        return true;
+        int rowAffected = pstm.executeUpdate();
+        if(rowAffected > 0) {
+            System.out.println("Delete Success!");
+            return true;
+        }
+        return false;
     }
 
     @Override

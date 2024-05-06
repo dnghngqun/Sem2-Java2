@@ -2,6 +2,7 @@ package session10.view;
 
 import session10.controller.CustomerController;
 import session10.controller.ProductController;
+import session10.entity.Customer;
 import session10.entity.Product;
 
 import java.io.BufferedReader;
@@ -19,7 +20,71 @@ public class ConsoleUI {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    private void addCustomer() throws SQLException, IOException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.print("Enter Customer Name: ");
+        String name = reader.readLine();
+        System.out.print("Enter Customer Address: ");
+        String address = reader.readLine();
+        System.out.print("Enter Customer Email: ");
+        String email = reader.readLine();
+        Customer customer = new Customer(id, name, address, email);
+        cusController.addCustomer(customer);
+    }
 
+    private void removeCustomer() throws SQLException, IOException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        cusController.removeCustomer(id);
+    }
+
+    private void updateCustomer() throws SQLException, IOException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.print("Enter Customer Name: ");
+        String name = reader.readLine();
+        System.out.print("Enter Customer Address: ");
+        String address = reader.readLine();
+        System.out.print("Enter Customer Email: ");
+        String email = reader.readLine();
+        Customer customer = new Customer(id, name, address, email);
+        cusController.updateCustomer(customer);
+    }
+
+    private void getAllCustomers() throws SQLException {
+        ArrayList<Customer> customers = cusController.getAllCustomers();
+        for (Customer c: customers){
+            System.out.println("==================");
+            System.out.println("Customer ID: " + c.getId());
+            System.out.println("Customer Name: " + c.getName());
+            System.out.println("Customer Address: " + c.getAddress());
+            System.out.println("Customer Email: " + c.getEmail());
+        }
+    }
+
+    private void getCustomerById() throws SQLException, IOException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        Customer customer = cusController.getCustomerById(id);
+        System.out.println("=================");
+        System.out.println("Customer ID: " + customer.getId());
+        System.out.println("Customer Name: " + customer.getName());
+        System.out.println("Customer Address: " + customer.getAddress());
+        System.out.println("Customer Email: " + customer.getEmail());
+    }
+
+    private void getCustomerByName() throws SQLException, IOException {
+        System.out.println("Enter Customer Name: ");
+        String name = reader.readLine();
+        ArrayList<Customer> customers = cusController.getCustomersByName(name);
+        for (Customer c: customers){
+            System.out.println("Customer ID: " + c.getId());
+            System.out.println("Customer Name: " + c.getName());
+            System.out.println("Customer Address: " + c.getAddress());
+            System.out.println("Customer Email: " + c.getEmail());
+        }
+    }
 
     private int menuCustomer() throws IOException {
         System.out.println("=====================");
@@ -34,6 +99,7 @@ public class ConsoleUI {
         int choice = Integer.parseInt(reader.readLine());
         return choice;
     }
+
 
     private void getAllProducts() throws SQLException {
         ArrayList<Product> products = productController.getAllProducts();
@@ -62,6 +128,53 @@ public class ConsoleUI {
         productController.addProduct(product);
     }
 
+    private void removeProduct() throws SQLException, IOException {
+        System.out.print("Enter Product ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        productController.removeProduct(id);
+    }
+
+    private void updateProduct() throws SQLException, IOException {
+        System.out.print("Enter Product ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.print("Enter Product Name: ");
+        String name = reader.readLine();
+        System.out.print("Enter Product Price: ");
+        double price = Double.parseDouble(reader.readLine());
+        System.out.print("Enter Product Description: ");
+        String description = String.valueOf(reader.read());
+        Product product = new Product(id, name, price, description);
+        productController.updateProduct(product);
+    }
+
+    private void getProductById() throws SQLException, IOException {
+        System.out.print("Enter Product ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        Product product = productController.getProductByID(id);
+        System.out.println("====================");
+        System.out.println("Product ID: " + product.getProductID());
+        System.out.println("Product Name: " + product.getProductName());
+        System.out.println("Product Price: " + product.getPrice());
+        System.out.println("Product Description: " + product.getDescription());
+    }
+
+    private void getProductByName() throws SQLException, IOException {
+        System.out.println("Enter Product Name: ");
+        String name = reader.readLine();
+        ArrayList<Product> products = productController.getProductsByName(name);
+        if(products.isEmpty()){
+            System.out.println("Product not found!");
+        }else {
+            for(Product product: products){
+            System.out.println("====================");
+            System.out.println("Product ID: " + product.getProductID());
+            System.out.println("Product Name: " + product.getProductName());
+            System.out.println("Product Price: " + product.getPrice());
+            System.out.println("Product Description: " + product.getDescription());
+            }
+        }
+    }
+
     private int menu() throws IOException {
         System.out.println("=======================");
         System.out.println("1. Add, Update, Remove Customer");
@@ -81,16 +194,22 @@ public class ConsoleUI {
             int choice = menuCustomer();
             switch (choice) {
                 case 1:
+                    addCustomer();
                     break;
                 case 2:
+                    updateCustomer();
                     break;
                 case 3:
+                    removeCustomer();
                     break;
                 case 4:
+                    getAllCustomers();
                     break;
                 case 5:
+                    getCustomerById();
                     break;
                 case 6:
+                    getCustomerByName();
                     break;
                 case 7:
                     reader.close();
@@ -124,15 +243,19 @@ public class ConsoleUI {
                     addProduct();
                     break;
                 case 2:
+                    updateProduct();
                     break;
                 case 3:
+                    removeProduct();
                     break;
                 case 4:
                     getAllProducts();
                     break;
                 case 5:
+                    getProductById();
                     break;
                 case 6:
+                    getProductByName();
                     break;
                 case 7:
                     reader.close();

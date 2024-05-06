@@ -20,4 +20,26 @@ public class ProductController {
         return products;
     }
 
+    public void updateProduct(Product product) throws SQLException {
+        ProductDAO.updateProduct(product);
+    }
+
+    public boolean removeProduct(int id) throws SQLException {
+        boolean result = ProductDAO.removeProduct(id);
+        if(result){
+            System.out.println("Product with ID " + id + " has been successfully removed.");
+        }else {
+            System.out.println("Failed to remove Product with ID " + id);
+        }
+        return result;
+    }
+
+    public ArrayList<Product> getProductsByName(String name) throws SQLException {
+        return ProductDAO.getProductsByName(name);
+    }
+
+    public Product getProductByID(int id) throws SQLException {
+        return ProductDAO.getProductByID(id);
+    }
+
 }

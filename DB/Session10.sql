@@ -41,4 +41,5 @@ DROP TABLE Order_table;
 DROP TABLE OrderDetail;
 DROP TABLE Product;
 
-SELECT * FROM customers
+SELECT * FROM customers;
+SELECT * FROM Product;

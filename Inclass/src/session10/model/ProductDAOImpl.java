@@ -57,21 +57,56 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public Product getProductByID(int id) throws SQLException {
+        pstm = conn.prepareStatement(SQL_GET_BY_ID);
+        pstm.setInt(1, id);
+
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) {
+            Product product = new Product();
+            product.setProductID(rs.getInt("ProductID"));
+            product.setProductName(rs.getString("ProductName"));
+            product.setPrice(rs.getDouble("Price"));
+            product.setDescription(rs.getString("Description"));
+            return product;
+        }
         return null;
     }
 
     @Override
     public void updateProduct(Product product) throws SQLException {
-
+        pstm = conn.prepareStatement(SQL_UPDATE_PRODUCT);
+        pstm.setString(1, product.getProductName());
+        pstm.setDouble(2, product.getPrice());
+        pstm.setString(3, product.getDescription());
+        pstm.setInt(4, product.getProductID());
+        pstm.executeUpdate();
     }
 
     @Override
     public Boolean removeProduct(int id) throws SQLException {
-        return null;
+        pstm = conn.prepareStatement(SQL_REMOVE_PRODUCT);
+        pstm.setInt(1, id);
+        int rs = pstm.executeUpdate();
+        if (rs > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public ArrayList<Product> getProductsByName(String name) throws SQLException {
-        return null;
+        ArrayList<Product> products = new ArrayList<>();
+        pstm = conn.prepareStatement(SQL_GET_BY_NAME);
+        pstm.setString(1, name);
+        ResultSet rs = pstm.executeQuery();
+        while (rs.next()) {
+            Product product = new Product();
+            product.setProductID(rs.getInt("ProductID"));
+            product.setProductName(rs.getString("ProductName"));
+            product.setPrice(rs.getDouble("Price"));
+            product.setDescription(rs.getString("Description"));
+            products.add(product);
+        }
+        return products;
     }
 }
