@@ -8,6 +8,24 @@ public class OrderDetail {
     private double unitPrice;
     private double discount = 0;
     private double totalPrice;
+    private String customerName;
+    private String productName;
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
 
     public void setDiscount(double discount) {
         this.discount = discount;
@@ -62,6 +80,8 @@ public class OrderDetail {
     }
 
     public double getTotalPrice() {
-        return totalPrice;
+        if(totalPrice != 0) return totalPrice;
+        return totalPrice = unitPrice * quantity - unitPrice * discount;
     }
+
 }

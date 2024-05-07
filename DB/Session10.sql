@@ -33,7 +33,7 @@ CREATE TABLE OrderDetail(
     quantity INT NOT NULL ,
     unitPrice DOUBLE NOT NULL ,
     discount DOUBLE DEFAULT 0,
-    totalPrice DOUBLE NOT NULL ,
+    totalPrice DOUBLE NOT NULL,
     CONSTRAINT orderID FOREIGN KEY (orderID) REFERENCES Order_table(id),
     CONSTRAINT productID FOREIGN KEY (productID) REFERENCES Product(ProductID)
 );
@@ -54,6 +54,21 @@ SELECT o.id AS OrderID,
        o.totalAmount,
        o.status
 FROM Order_table o
-INNER JOIN customers c on o.customerID = c.id
-WHERE o.id = 1;
+INNER JOIN customers c on o.customerID = c.id;
 
+SELECT o.id AS Order_Detail_ID
+FROM OrderDetail o
+INNER JOIN customers c on orderID;
+
+SELECT od.id AS Order_Detail_ID,
+       c.name AS CustomerName,
+       p.ProductName,
+       od.quantity,
+       od.unitPrice,
+       od.discount,
+       od.totalPrice
+FROM OrderDetail od
+INNER JOIN Order_table o on od.orderID = o.id
+INNER JOIN customers c on o.customerID = c.id
+INNER JOIN Product p on od.productID = p.ProductID
+WHERE orderID = 1;

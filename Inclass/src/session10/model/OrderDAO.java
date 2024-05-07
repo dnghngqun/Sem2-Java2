@@ -13,4 +13,5 @@ public interface OrderDAO {
     ArrayList<Order> getOrdersByCustomerId(int customerId) throws SQLException;
     ArrayList<Order> getAllOrders() throws SQLException;
     boolean updateOrderStatus(int orderId, String status) throws SQLException;
+    boolean deleteAllOrderByCustomerId(int orderId) throws SQLException;
 }

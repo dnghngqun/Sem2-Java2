@@ -2,12 +2,14 @@ package session10.model;
 
 
 import session10.entity.Customer;
+import session10.entity.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CustomerDAOImpl implements CustomerDAO {
     private static final Connection conn;
@@ -59,6 +61,27 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean removeCustomer(int id) throws SQLException {
+        Scanner input = new Scanner(System.in);
+        ArrayList<Order> orders = new OrderDAOImpl().getOrdersByCustomerId(id);
+        if(orders.size() > 0) {
+            System.out.println("To delete Customer ID: "+ id +", please delete all Orders first!");
+            System.out.print("Do you want to delete all Orders of Customer?(Y/N): ");
+            String Stringchoice = input.nextLine();
+            char choice = Stringchoice.charAt(0);
+            if(choice == 'Y' || choice == 'y') {
+                boolean result1 = new OrderDAOImpl().deleteAllOrderByCustomerId(id);
+                if(result1) {
+                    input.close();
+                    System.out.println("All Orders of Customer has been successfully removed!");
+                }else System.out.println("Something wrong!");
+            }else if(choice == 'N' || choice == 'n') {
+                System.exit(0);
+            }
+            else {
+                input.close();
+                System.out.println("Invalid input!!!");
+            }
+        }
         pstm = conn.prepareStatement(SQL_DELETE_CUSTOMER);
         pstm.setInt(1, id);
         int rowAffected = pstm.executeUpdate();

@@ -9,10 +9,17 @@ public class Order {
     private double totalAmount;
     private int status;
     private String statusString;
+    private String customerName;
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    public Order(int customerId, int id) {
+    public Order(int id, int customerId) {
         this.customerId = customerId;
         this.id = id;
     }
@@ -28,6 +35,13 @@ public class Order {
     public Order(int id, int customerId, int status) {
         this.id = id;
         this.customerId = customerId;
+        this.status = status;
+    }
+
+    public Order(int id, int customerId, double totalAmount, int status) {
+        this.id = id;
+        this.customerId = customerId;
+        this.totalAmount = totalAmount;
         this.status = status;
     }
 
@@ -47,11 +61,24 @@ public class Order {
     }
 
     public void setStatus(int status) {
+
         this.status = status;
     }
 
     public String getStatusString() {
-        return statusString = status == 0 ? "Cancelled" : status == 1 ? "Pending" : "Completed";
+        if(statusString.isEmpty()){
+            switch (status){
+                case 1:
+                    return this.statusString = "Pending";
+                case 2:
+                    return this.statusString = "Completed";
+                case 0:
+                    return this.statusString = "Cancelled";
+
+            }
+        }
+        return statusString;
+
     }
 
     public int getStatus() {

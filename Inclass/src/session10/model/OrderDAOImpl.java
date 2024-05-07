@@ -9,35 +9,34 @@ public class OrderDAOImpl implements OrderDAO{
     private static final Connection conn;
     private PreparedStatement pstm = null;
     private String SQL_CREATE_ORDER = "INSERT INTO Order_table(id, customerID, orderDate, totalAmount, status) VALUES (?,?,?,?,?)";
-    private String SQL_UPDATE_ORDER = "UPDATE Order_table SET customerID = ?, orderDate = ?, totalAmount = ?, status = ? WHERE id = ?";
+    private String SQL_UPDATE_ORDER = "UPDATE Order_table SET customerID = ?, totalAmount = ?, status = ? WHERE id = ?";
     private String SQL_DELETE_ORDER = "DELETE FROM Order_table WHERE id = ?";
-    private String SQL_GET_ALL_ORDERS = "SELECT o.id AS OrderID," +
-                                        "customerID," +
-                                        "c.name AS CustomerName," +
+    private String SQL_GET_ALL_ORDERS = "SELECT o.id AS OrderID, customerID, c.name AS CustomerName," +
                                         "o.orderDate," +
                                         "o.totalAmount," +
-                                        "o.status" +
-                                        "FROM Order_table o" +
+                                        "o.status " +
+                                        "FROM Order_table o " +
                                         "INNER JOIN customers c on o.customerID = c.id";
     private String SQL_GET_ORDER_BY_ID = "SELECT o.id AS OrderID," +
                                         "customerID," +
                                         "c.name AS CustomerName," +
                                         "o.orderDate," +
                                         "o.totalAmount," +
-                                        "o.status" +
-                                        "FROM Order_table o" +
-                                        "INNER JOIN customers c on o.customerID = c.id" +
+                                        "o.status " +
+                                        "FROM Order_table o " +
+                                        "INNER JOIN customers c on o.customerID = c.id " +
                                         "WHERE o.id = ?";
     private String SQL_GET_ORDERS_BY_CUSTOMER_ID = "SELECT o.id AS OrderID," +
                                         "customerID," +
                                         "c.name AS CustomerName," +
                                         "o.orderDate," +
                                         "o.totalAmount," +
-                                        "o.status" +
-                                        "FROM Order_table o" +
-                                        "INNER JOIN customers c on o.customerID = c.id" +
+                                        "o.status " +
+                                        "FROM Order_table o " +
+                                        "INNER JOIN customers c on o.customerID = c.id " +
                                         "WHERE o.customerID = ?";
     private String SQL_UPDATE_STATUS = "UPDATE Order_table SET status = ? WHERE id = ?";
+    private String SQL_DELETE_ORDER_BY_CUSTOMER_ID = "DELETE FROM Order_table WHERE customerID = ?";
     static {
         try {
             conn = MySQLConnectionDB.getMyConnection();
@@ -62,10 +61,9 @@ public class OrderDAOImpl implements OrderDAO{
     public void updateOrder(Order order) throws SQLException {
         pstm = conn.prepareStatement(SQL_UPDATE_ORDER);
         pstm.setInt(1, order.getCustomerId());
-        pstm.setDate(2, new Date(order.getOrderDate().getTime()));
-        pstm.setDouble(3, order.getTotalAmount());
-        pstm.setString(4, order.getStatusString());
-        pstm.setInt(5, order.getId());
+        pstm.setDouble(2, order.getTotalAmount());
+        pstm.setString(3, order.getStatusString());
+        pstm.setInt(4, order.getId());
         pstm.executeUpdate();
     }
 
@@ -88,6 +86,7 @@ public class OrderDAOImpl implements OrderDAO{
             Order order = new Order();
             order.setId(rs.getInt("OrderID"));
             order.setCustomerId(rs.getInt("customerID"));
+            order.setCustomerName(rs.getString("CustomerName"));
             order.setOrderDate(rs.getDate("orderDate"));
             order.setTotalAmount(rs.getDouble("totalAmount"));
             order.setStatusString(rs.getString("status"));
@@ -124,6 +123,7 @@ public class OrderDAOImpl implements OrderDAO{
             Order order = new Order();
             order.setId(rs.getInt("OrderID"));
             order.setCustomerId(rs.getInt("customerID"));
+            order.setCustomerName(rs.getString("CustomerName"));
             order.setOrderDate(rs.getDate("orderDate"));
             order.setTotalAmount(rs.getDouble("totalAmount"));
             order.setStatusString(rs.getString("status"));
@@ -144,4 +144,13 @@ public class OrderDAOImpl implements OrderDAO{
         return false;
     }
 
+    @Override
+    public boolean deleteAllOrderByCustomerId(int customerId) throws SQLException {
+        pstm = conn.prepareStatement(SQL_DELETE_ORDER_BY_CUSTOMER_ID);
+        pstm.setInt(1, customerId);
+
+        int result = pstm.executeUpdate();
+        if(result > 0) return true;
+        return false;
+    }
 }

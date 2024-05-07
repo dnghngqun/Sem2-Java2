@@ -15,7 +15,8 @@ public class OrderController {
         order1.setId(order.getId());
         order1.setCustomerId(order.getCustomerId());
         order1.setOrderDate(new Date());
-        orderDAO.addOrder(order);
+        order1.setStatus(1);//default: Pending
+        orderDAO.addOrder(order1);
     }
 
     public void updateOrder(Order order) throws SQLException {
@@ -46,36 +47,18 @@ public class OrderController {
     }
 
     public boolean updateOrderStatus(int orderId, int status) throws SQLException {
-        boolean result = true;
+        Order order = new Order();
+        order.setStatus(status);
 
-           // 0: Cancelled, 1: Pending, 2: Completed
-           String statusString = null;
-           switch (status) {
-               case 0:
-                   statusString = "Cancelled";
-                   break;
-               case 1:
-                   statusString = "Pending";
-                   break;
-               case 2:
-                   statusString = "Completed";
-                   break;
-               default:
-                   result = false;
-                   System.out.println("Invalid status. Please try again.");
-                   break;
-           }
-
-        if(result){
-            boolean result2 = orderDAO.updateOrderStatus(orderId, statusString);
-            if(result2) {
-                System.out.println("Order with ID " + orderId + " has been successfully updated.");
-            }else {
-                System.out.println("Failed to update order with ID " + orderId + ".");
-                System.out.println("Please try again.");
-                result = false;
+        boolean result = orderDAO.updateOrderStatus(orderId, order.getStatusString());
+        if(result) {
+            System.out.println("Order with ID " + orderId + " has been successfully updated.");
+            return true;
+        }else {
+            System.out.println("Failed to update order with ID " + orderId + ".");
+            System.out.println("Please try again.");
+            return false;
             }
-        }
-        return result;
+
     }
 }

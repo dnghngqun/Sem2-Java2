@@ -78,7 +78,7 @@ public class ConsoleUI {
     }
 
     private void getCustomerByName() throws SQLException, IOException {
-        System.out.println("Enter Customer Name: ");
+        System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
         ArrayList<Customer> customers = cusController.getCustomersByName(name);
         for (Customer c: customers){
@@ -117,6 +117,38 @@ public class ConsoleUI {
         int choice = Integer.parseInt(reader.readLine());
         return choice;
     }
+
+    private void choice3() throws IOException, SQLException {
+        while (true) {
+            int choice = menuOrder();
+            switch (choice) {
+                case 1:
+                    addOrder();
+                    break;
+                case 2:
+                    updateOrder();
+                    break;
+                case 3:
+                    deleteOrder();
+                    break;
+                case 4:
+                    getAllOrders();
+                    break;
+                case 5:
+                    getOrderById();
+                    break;
+                case 6:
+                    getOrderByCustomerId();
+                    break;
+                case 7:
+                    reader.close();
+                    System.exit(0);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + choice);
+            }
+        }
+    }
     private void updateOrderStatus() throws SQLException, IOException{
 
         System.out.print("Enter Order ID: ");
@@ -135,6 +167,67 @@ public class ConsoleUI {
         System.out.println("Enter customer ID: ");
         int customerId = Integer.parseInt(reader.readLine());
         Order order = new Order(id, customerId);
+        orderController.addOrder(order);
+    }
+
+    private void updateOrder() throws SQLException, IOException {
+        System.out.println("Enter order ID to update: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.println("Enter customer ID: ");
+        int customerId = Integer.parseInt(reader.readLine());
+        System.out.println("Enter total amount: ");
+        double totalAmount = Double.parseDouble(reader.readLine());
+        System.out.println("Enter order status (0: Cancelled 1: Pending 2: Completed): ");
+        int status = Integer.parseInt(reader.readLine());
+        Order order = new Order(id, customerId, totalAmount, status);
+        orderController.updateOrder(order);
+    }
+
+    private void deleteOrder() throws SQLException, IOException {
+        System.out.println("Enter order ID to delete: ");
+        int id = Integer.parseInt(reader.readLine());
+        orderController.deleteOrder(id);
+    }
+
+    private void  getAllOrders() throws SQLException {
+        ArrayList<Order> orders = orderController.getAllOrders();
+        for (Order o: orders){
+            System.out.println("===================");
+            System.out.println("Order ID: " + o.getId());
+            System.out.println("Customer ID: " + o.getCustomerId());
+            System.out.println("Customer Name: " + o.getCustomerName());
+            System.out.println("Order Date: " + o.getOrderDate());
+            System.out.println("Total Amount: " + o.getTotalAmount());
+            System.out.println("Order Status: " + o.getStatusString());
+        }
+    }
+
+    private void getOrderById() throws SQLException, IOException {
+        System.out.println("Enter order ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        Order order = orderController.getOrderById(id);
+        System.out.println("===================");
+        System.out.println("Order ID: " + order.getId());
+        System.out.println("Customer ID: " + order.getCustomerId());
+        System.out.println("Customer Name: " + order.getCustomerName());
+        System.out.println("Order Date: " + order.getOrderDate());
+        System.out.println("Total Amount: " + order.getTotalAmount());
+        System.out.println("Order Status: " + order.getStatusString());
+    }
+
+    private void getOrderByCustomerId() throws SQLException, IOException {
+        System.out.println("Enter customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        ArrayList<Order> orders = orderController.getOrdersByCustomerId(id);
+        for (Order o: orders){
+            System.out.println("===================");
+            System.out.println("Order ID: " + o.getId());
+            System.out.println("Customer ID: " + o.getCustomerId());
+            System.out.println("Customer Name: " + o.getCustomerName());
+            System.out.println("Order Date: " + o.getOrderDate());
+            System.out.println("Total Amount: " + o.getTotalAmount());
+            System.out.println("Order Status: " + o.getStatusString());
+        }
     }
 
 //    Product
@@ -317,12 +410,14 @@ public class ConsoleUI {
                     choice2();
                     break;
                 case 3:
+                    choice3();
                     break;
                 case 4:
                     break;
                 case 5:
                     break;
                 case 6:
+                    updateOrderStatus();
                     break;
                 case 7:
                     reader.close();
