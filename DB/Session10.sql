@@ -3,14 +3,14 @@ CREATE DATABASE FPT_SESSION10;
 USE FPT_SESSION10;
 
 CREATE TABLE customers(
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     name varchar(255) not null,
     address varchar(255) not null,
     email varchar(255) not null
 );
 
 CREATE TABLE Order_table(
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     customerID INT NOT NULL ,
     orderDate DATE NOT NULL ,
     totalAmount DOUBLE ,
@@ -20,14 +20,14 @@ CREATE TABLE Order_table(
 
 
 CREATE TABLE Product(
-    ProductID INT PRIMARY KEY,
+    ProductID INT PRIMARY KEY AUTO_INCREMENT,
     ProductName VARCHAR(255) NOT NULL ,
     Price DOUBLE NOT NULL ,
     Description VARCHAR(255)
 );
 
 CREATE TABLE OrderDetail(
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     orderID INT NOT NULL ,
     productID INT NOT NULL ,
     quantity INT NOT NULL ,
@@ -38,6 +38,7 @@ CREATE TABLE OrderDetail(
     CONSTRAINT productID FOREIGN KEY (productID) REFERENCES Product(ProductID)
 );
 
+DROP TABLE customers;
 DROP TABLE Order_table;
 DROP TABLE OrderDetail;
 DROP TABLE Product;

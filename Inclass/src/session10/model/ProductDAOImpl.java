@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProductDAOImpl implements ProductDAO {
     private static final Connection conn;
-    private final String SQL_CREATE_PRODUCT = "INSERT INTO Product(ProductID, ProductName, Price, Description) VALUES (?,?,?,?)";
+    private final String SQL_CREATE_PRODUCT = "INSERT INTO Product(ProductName, Price, Description) VALUES (?,?,?)";
     private final String SQL_GET_BY_ID = "SELECT * FROM Product WHERE ProductID = ?";
     private final String SQL_UPDATE_PRODUCT = "UPDATE Product SET ProductName = ?, Price = ?, Description = ? WHERE ProductID = ?";
     private final String SQL_REMOVE_PRODUCT = "DELETE FROM Product WHERE ProductID = ?";
@@ -30,10 +30,9 @@ public class ProductDAOImpl implements ProductDAO {
 
     public void addProduct(Product product) throws SQLException {
     pstm = conn.prepareStatement(SQL_CREATE_PRODUCT);
-    pstm.setInt(1, product.getProductID());
-    pstm.setString(2, product.getProductName());
-    pstm.setDouble(3, product.getPrice());
-    pstm.setString(4, product.getDescription());
+    pstm.setString(1, product.getProductName());
+    pstm.setDouble(2, product.getPrice());
+    pstm.setString(3, product.getDescription());
     pstm.executeUpdate();
     System.out.println("Insert Success");
     }
