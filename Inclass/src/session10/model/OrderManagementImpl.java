@@ -67,6 +67,7 @@ public class OrderManagementImpl implements OrderManagementDAO{
     private String SQL_ADD_ORDER_DETAIL = "INSERT INTO OrderDetail(orderID, productID, quantity, unitPrice, discount, totalPrice) VALUES (?,?,?,?,?,?,?)";
     private String SQL_UPDATE_ORDER_DETAIL = "UPDATE OrderDetail SET orderID = ?, productID = ?, quantity = ?, unitPrice = ?, discount = ?, totalPrice = ? WHERE id = ?";
     private String SQL_DELETE_ORDER_DETAIL = "DELETE FROM OrderDetail WHERE id = ?";
+    private String SQL_GET_ALL_ORDER_DETAILS = "SELECT * FROM OrderDetail WHERE orderID = ";
     @Override
     public void addOrder(Order order, List<OrderDetail> orderDetail) throws SQLException {
         conn.setAutoCommit(false);
@@ -99,11 +100,18 @@ public class OrderManagementImpl implements OrderManagementDAO{
 
     @Override
     public void updateOrder(Order order) throws SQLException {
-
+    pstm = conn.prepareStatement(SQL_UPDATE_ORDER);
+    pstm.setInt(1, order.getCustomerId());
+    pstm.setDouble(2, order.getTotalAmount());
+    pstm.setString(3, order.getStatusString());
+    pstm.setInt(4, order.getId());
+    pstm.executeUpdate();
     }
 
     @Override
     public boolean deleteOrder(int id) throws SQLException {
+        conn.setAutoCommit(false);
+        pstm = conn.prepareStatement(SQL_DELETE_ORDER);
         return false;
     }
 

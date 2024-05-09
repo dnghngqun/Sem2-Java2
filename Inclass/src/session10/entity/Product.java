@@ -1,13 +1,12 @@
 package session10.entity;
 
-public class Product {
-    private int ProductID;
+public class Product extends Entity <Integer>{
     private String ProductName;
     private double Price;
     private String description;
 
     public Product(int productID, String productName, double price, String description) {
-        this.ProductID = productID;
+        this.setId(productID);
         this.ProductName = productName;
         this.Price = price;
         this.description = description;
@@ -16,9 +15,7 @@ public class Product {
     public Product() {
     }
 
-    public void setProductID(int productID) {
-        ProductID = productID;
-    }
+
 
     public void setProductName(String productName) {
         ProductName = productName;
@@ -32,9 +29,7 @@ public class Product {
         this.description = description;
     }
 
-    public int getProductID() {
-        return ProductID;
-    }
+
 
     public String getProductName() {
         return ProductName;

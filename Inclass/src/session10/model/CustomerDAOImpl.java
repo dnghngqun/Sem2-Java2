@@ -92,12 +92,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public void updateCustomer(Customer customer) throws SQLException {
+    public void updateCustomer(int id,Customer customer) throws SQLException {
         pstm = conn.prepareStatement(SQL_UPDATE_CUSTOMER);
         pstm.setString(1, customer.getName());
         pstm.setString(2, customer.getAddress());
         pstm.setString(3, customer.getEmail());
-        pstm.setInt(4, customer.getId());
+        pstm.setInt(4, id);
         pstm.executeUpdate();
         System.out.println("Update Success!");
     }

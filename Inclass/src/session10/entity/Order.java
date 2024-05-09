@@ -2,8 +2,7 @@ package session10.entity;
 
 import java.util.Date;
 
-public class Order {
-    private int id;
+public class Order extends  Entity<Integer>{
     private int customerId;
     private Date orderDate;
     private double totalAmount;
@@ -20,12 +19,12 @@ public class Order {
     }
 
     public Order(int id, int customerId) {
+        this.setId(id);
         this.customerId = customerId;
-        this.id = id;
     }
 
     public Order(int id, int customerId, Date orderDate, double totalAmount, int status) {
-        this.id = id;
+        this.setId(id);
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
@@ -33,20 +32,20 @@ public class Order {
     }
 
     public Order(int id, int customerId, int status) {
-        this.id = id;
+        this.setId(id);
         this.customerId = customerId;
         this.status = status;
     }
 
     public Order(int id, int customerId, double totalAmount, int status) {
-        this.id = id;
+        this.setId(id);
         this.customerId = customerId;
         this.totalAmount = totalAmount;
         this.status = status;
     }
 
     public Order(int id, int customerId, Date orderDate, double totalAmount, String statusString) {
-        this.id = id;
+        this.setId(id);
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
@@ -87,7 +86,6 @@ public class Order {
 
 
     public void setId(int id) {
-        this.id = id;
     }
 
 
@@ -97,9 +95,6 @@ public class Order {
 
 
 
-    public int getId() {
-        return id;
-    }
 
 
     public Date getOrderDate() {

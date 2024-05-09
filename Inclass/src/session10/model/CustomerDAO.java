@@ -12,7 +12,7 @@ public interface CustomerDAO {
 
     boolean removeCustomer(int id) throws SQLException;
 
-    void updateCustomer(Customer customer) throws SQLException;
+    void updateCustomer(int id, Customer customer) throws SQLException;
 
     ArrayList<Customer> getCustomersByName(String name) throws SQLException;
 

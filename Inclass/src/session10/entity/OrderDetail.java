@@ -1,7 +1,6 @@
 package session10.entity;
 
-public class OrderDetail {
-    private int id;
+public class OrderDetail extends Entity<Integer>{
     private int orderId;
     private int productId;
     private int quantity;
@@ -35,13 +34,9 @@ public class OrderDetail {
         return discount;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public int getId() {
-        return id;
-    }
+
+
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;

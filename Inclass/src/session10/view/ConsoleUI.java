@@ -24,15 +24,13 @@ public class ConsoleUI {
 
 //    Customer
     private void addCustomer() throws SQLException, IOException {
-        System.out.print("Enter Customer ID: ");
-        int id = Integer.parseInt(reader.readLine());
         System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
         System.out.print("Enter Customer Address: ");
         String address = reader.readLine();
         System.out.print("Enter Customer Email: ");
         String email = reader.readLine();
-        Customer customer = new Customer(id, name, address, email);
+        Customer customer = new Customer( name, address, email);
         cusController.addCustomer(customer);
     }
 
@@ -51,8 +49,8 @@ public class ConsoleUI {
         String address = reader.readLine();
         System.out.print("Enter Customer Email: ");
         String email = reader.readLine();
-        Customer customer = new Customer(id, name, address, email);
-        cusController.updateCustomer(customer);
+        Customer customer = new Customer(name, address, email);
+        cusController.updateCustomer(id, customer);
     }
 
     private void getAllCustomers() throws SQLException {

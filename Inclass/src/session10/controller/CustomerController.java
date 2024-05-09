@@ -20,8 +20,8 @@ public class CustomerController {
         customerDAO.addCustomer(customer);
     }
 
-    public void updateCustomer(Customer customer) throws SQLException {
-        customerDAO.updateCustomer(customer);
+    public void updateCustomer(int id,Customer customer) throws SQLException {
+        customerDAO.updateCustomer(id, customer);
     }
 
     public boolean removeCustomer(int id) throws SQLException {

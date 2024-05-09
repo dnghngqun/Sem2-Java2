@@ -1,7 +1,6 @@
 package session10.entity;
 
-public class Customer {
-    private int id;
+public class Customer extends Entity<Integer> {
     private String name;
     private String address;
     private String email;
@@ -9,16 +8,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String name, String address, String email) {
-        this.id = id;
+    public Customer( String name, String address, String email) {
+
         this.name = name;
         this.address = address;
         this.email = email;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -32,9 +29,7 @@ public class Customer {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public String getName() {
         return name;
