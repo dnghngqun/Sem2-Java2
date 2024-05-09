@@ -14,6 +14,10 @@ public class Order extends  Entity<Integer>{
         this.customerName = customerName;
     }
 
+    public Order(int customerId) {
+        this.customerId = customerId;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -60,33 +64,28 @@ public class Order extends  Entity<Integer>{
     }
 
     public void setStatus(int status) {
-
         this.status = status;
+
     }
 
     public String getStatusString() {
-        if(statusString.isEmpty()){
-            switch (status){
-                case 1:
-                    return this.statusString = "Pending";
-                case 2:
-                    return this.statusString = "Completed";
-                case 0:
-                    return this.statusString = "Cancelled";
-
-            }
+        if(statusString != null) return statusString;
+        switch (status) {
+            case 1:
+                return this.statusString = "Pending";
+            case 2:
+                return this.statusString = "Completed";
+            case 0:
+                return this.statusString = "Cancelled";
+            default:
+                return statusString;
         }
-        return statusString;
-
     }
-
     public int getStatus() {
         return status;
     }
 
 
-    public void setId(int id) {
-    }
 
 
     public void setOrderDate(Date orderDate) {

@@ -18,7 +18,6 @@ CREATE TABLE Order_table(
     CONSTRAINT cusID FOREIGN KEY (customerID) REFERENCES customers(id)
 );
 
-
 CREATE TABLE Product(
     ProductID INT PRIMARY KEY AUTO_INCREMENT,
     ProductName VARCHAR(255) NOT NULL ,
@@ -73,3 +72,7 @@ INNER JOIN Order_table o on od.orderID = o.id
 INNER JOIN customers c on o.customerID = c.id
 INNER JOIN Product p on od.productID = p.ProductID
 WHERE orderID = 1;
+
+SELECT totalPrice FROM OrderDetail od
+INNER JOIN Order_table Ot on od.orderID = Ot.id
+WHERE customerID = 1;

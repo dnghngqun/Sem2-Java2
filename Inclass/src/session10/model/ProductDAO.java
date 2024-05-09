@@ -12,7 +12,7 @@ public interface ProductDAO {
 
     Product getProductByID(int id) throws SQLException;
 
-    void updateProduct(Product productDAO) throws SQLException;
+    void updateProduct(Product product, int id) throws SQLException;
 
     Boolean removeProduct(int id) throws SQLException;
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface OrderManagementDAO {
     void addOrder(Order order, List<OrderDetail> orderDetail) throws SQLException;
-    void updateOrder(Order order) throws SQLException;
+    boolean updateOrder(Order order) throws SQLException;
     boolean deleteOrder(int id) throws SQLException;
     ArrayList<Order> getAllOrder() throws SQLException;
     ArrayList<Order> getOrdersByCustomerId(int customerId) throws SQLException;
@@ -19,5 +19,6 @@ public interface OrderManagementDAO {
 
     ArrayList<OrderDetail> showOrderDetailsByCustomerID(int id) throws SQLException;
 
+    double getTotalPriceByCustomerId(int id) throws SQLException;
 
 }

@@ -5,8 +5,7 @@ public class Product extends Entity <Integer>{
     private double Price;
     private String description;
 
-    public Product(int productID, String productName, double price, String description) {
-        this.setId(productID);
+    public Product( String productName, double price, String description) {
         this.ProductName = productName;
         this.Price = price;
         this.description = description;

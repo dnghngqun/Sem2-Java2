@@ -35,8 +35,15 @@ public class OrderDetail extends Entity<Integer>{
     }
 
 
+    public OrderDetail(int productId, int quantity, double unitPrice, double discount) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.discount = discount;
+    }
 
-
+    public OrderDetail() {
+    }
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;

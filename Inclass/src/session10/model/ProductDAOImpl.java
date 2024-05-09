@@ -45,7 +45,7 @@ public class ProductDAOImpl implements ProductDAO {
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Product product = new Product();
-            product.setProductID(rs.getInt("ProductID"));
+            product.setId(rs.getInt("ProductID"));
             product.setProductName(rs.getString("ProductName"));
             product.setPrice(rs.getDouble("Price"));
             product.setDescription(rs.getString("Description"));
@@ -62,7 +62,7 @@ public class ProductDAOImpl implements ProductDAO {
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             Product product = new Product();
-            product.setProductID(rs.getInt("ProductID"));
+            product.setId(rs.getInt("ProductID"));
             product.setProductName(rs.getString("ProductName"));
             product.setPrice(rs.getDouble("Price"));
             product.setDescription(rs.getString("Description"));
@@ -72,12 +72,12 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProduct(Product product) throws SQLException {
+    public void updateProduct(Product product, int id) throws SQLException {
         pstm = conn.prepareStatement(SQL_UPDATE_PRODUCT);
         pstm.setString(1, product.getProductName());
         pstm.setDouble(2, product.getPrice());
         pstm.setString(3, product.getDescription());
-        pstm.setInt(4, product.getProductID());
+        pstm.setInt(4, id);
         pstm.executeUpdate();
     }
 
@@ -100,7 +100,7 @@ public class ProductDAOImpl implements ProductDAO {
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Product product = new Product();
-            product.setProductID(rs.getInt("ProductID"));
+            product.setId(rs.getInt("ProductID"));
             product.setProductName(rs.getString("ProductName"));
             product.setPrice(rs.getDouble("Price"));
             product.setDescription(rs.getString("Description"));

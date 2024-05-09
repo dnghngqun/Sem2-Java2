@@ -20,8 +20,8 @@ public class ProductController {
         return products;
     }
 
-    public void updateProduct(Product product) throws SQLException {
-        ProductDAO.updateProduct(product);
+    public void updateProduct(Product product, int id) throws SQLException {
+        ProductDAO.updateProduct(product, id);
     }
 
     public boolean removeProduct(int id) throws SQLException {
