@@ -5,6 +5,7 @@ import session10.model.CustomerDAOImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerController {
     CustomerDAOImpl customerDAO = new CustomerDAOImpl();
@@ -12,7 +13,7 @@ public class CustomerController {
     public CustomerController() throws SQLException {
     }
 
-    public ArrayList<Customer> getAllCustomers() throws SQLException {
+    public List<Customer> getAllCustomers() throws SQLException {
         return customerDAO.getAllCustomers();
     }
 
@@ -34,7 +35,7 @@ public class CustomerController {
         return result;
     }
 
-    public ArrayList<Customer> getAllCustomer() throws SQLException {
+    public List<Customer> getAllCustomer() throws SQLException {
        return customerDAO.getAllCustomers();
     }
 
@@ -42,7 +43,7 @@ public class CustomerController {
         return customerDAO.getCustomerById(id);
     }
 
-    public ArrayList<Customer> getCustomersByName(String name) throws SQLException {
+    public List<Customer> getCustomersByName(String name) throws SQLException {
         return customerDAO.getCustomersByName(name);
     }
 }

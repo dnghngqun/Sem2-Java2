@@ -1,5 +1,6 @@
 package session10.view;
 
+import session10.controller.Controller;
 import session10.controller.CustomerController;
 import session10.controller.OrderManagerController;
 import session10.controller.ProductController;
@@ -13,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ConsoleUI {
     private final BufferedReader reader;
@@ -33,8 +36,10 @@ public class ConsoleUI {
         String address = reader.readLine();
         System.out.print("Enter Customer Email: ");
         String email = reader.readLine();
-        Customer customer = new Customer( name, address, email);
-        cusController.addCustomer(customer);
+        new Controller<Customer>().addEntity("customers", Arrays.asList(null, name, address, email));
+//        Customer customer = new Customer( name, address, email);
+//        Controller<Customer> cusControllerCustomer = new Controller<>();
+//        cusControllerCustomer.add(customer);
     }
 
     private void removeCustomer() throws SQLException, IOException {
@@ -57,7 +62,8 @@ public class ConsoleUI {
     }
 
     private void getAllCustomers() throws SQLException {
-        ArrayList<Customer> customers = cusController.getAllCustomers();
+
+        List<Customer> customers = cusController.getAllCustomers();
         for (Customer c: customers){
             System.out.println("==================");
             System.out.println("Customer ID: " + c.getId());
@@ -81,7 +87,7 @@ public class ConsoleUI {
     private void getCustomerByName() throws SQLException, IOException {
         System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
-        ArrayList<Customer> customers = cusController.getCustomersByName(name);
+        List<Customer> customers = cusController.getCustomersByName(name);
         for (Customer c: customers){
             System.out.println("Customer ID: " + c.getId());
             System.out.println("Customer Name: " + c.getName());
@@ -306,8 +312,9 @@ public class ConsoleUI {
         double price = Double.parseDouble(reader.readLine());
         System.out.print("Enter Product Description: ");
         String description = String.valueOf(reader.read());
-        Product product = new Product(name, price, description);
-        productController.addProduct(product);
+        new Controller<Product>().addEntity("Product", Arrays.asList(null, name, price, description));
+//        Product product = new Product(name, price, description);
+//        productController.addProduct(product);
     }
 
     private void removeProduct() throws SQLException, IOException {

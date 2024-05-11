@@ -2,6 +2,7 @@ package session10.model;
 
 
 import session10.entity.Customer;
+import session10.entity.Entity;
 import session10.entity.Order;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CustomerDAOImpl implements CustomerDAO {
@@ -43,9 +45,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public ArrayList<Customer> getAllCustomers() throws SQLException {
-        ArrayList<Customer> list = new ArrayList<>();
+    public List<Customer> getAllCustomers() throws SQLException{
         pstm = conn.prepareStatement(SQL_GET_ALL_CUSTOMERS);
+        Model<Customer> model = new Model<>();
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
             Customer customer = new Customer();
@@ -53,22 +55,22 @@ public class CustomerDAOImpl implements CustomerDAO {
             customer.setName(rs.getString("name"));
             customer.setAddress(rs.getString("address"));
             customer.setEmail(rs.getString("email"));
-            list.add(customer);
+            model.getEntities().add(customer);
         }
-        return list;
+        return model.getEntities();
     }
 
     @Override
     public boolean removeCustomer(int id) throws SQLException {
         Scanner input = new Scanner(System.in);
-        ArrayList<Order> orders = new OrderDAOImpl().getOrdersByCustomerId(id);
+        ArrayList<Order> orders = new OrderManagementImpl().getOrdersByCustomerId(id);
         if(orders.size() > 0) {
             System.out.println("To delete Customer ID: "+ id +", please delete all Orders first!");
             System.out.print("Do you want to delete all Orders of Customer?(Y/N): ");
             String Stringchoice = input.nextLine();
             char choice = Stringchoice.charAt(0);
             if(choice == 'Y' || choice == 'y') {
-                boolean result1 = new OrderDAOImpl().deleteAllOrderByCustomerId(id);
+                boolean result1 = new OrderManagementImpl().deleteAllOrderByCustomerId(id);
                 if(result1) {
                     input.close();
                     System.out.println("All Orders of Customer has been successfully removed!");
@@ -103,9 +105,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public ArrayList<Customer> getCustomersByName(String name) throws SQLException {
-        ArrayList<Customer> list = new ArrayList<>();
+    public List<Customer> getCustomersByName(String name) throws SQLException {
         pstm = conn.prepareStatement(SQL_GET_CUSTOMER_BY_NAME);
+        Model<Customer> model = new Model<>();
         pstm.setString(1, name);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
@@ -114,9 +116,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             customer.setName(rs.getString("name"));
             customer.setAddress(rs.getString("address"));
             customer.setEmail(rs.getString("email"));
-            list.add(customer);
+            model.getEntities().add(customer);
         }
-        return list;
+        return model.getEntities();
     }
 
     @Override

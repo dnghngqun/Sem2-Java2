@@ -76,3 +76,6 @@ WHERE orderID = 1;
 SELECT totalPrice FROM OrderDetail od
 INNER JOIN Order_table Ot on od.orderID = Ot.id
 WHERE customerID = 1;
+
+
+INSERT INTO customers VALUES ('Quan', 'Han', 'Abc');
