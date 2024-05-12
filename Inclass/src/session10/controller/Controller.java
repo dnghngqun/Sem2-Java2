@@ -27,6 +27,9 @@ public class Controller<T extends Entity<?>> {
    public void addEntity(T entity) throws SQLException, IllegalAccessException {
        new Model<T>().addEntity(entity);
     }
+    public void removeEntity(T entity) throws SQLException, IllegalAccessException {
+        new Model<T>().removeEntity(entity);
+    }
 
 
 }
