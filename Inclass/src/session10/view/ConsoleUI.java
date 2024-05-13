@@ -4,10 +4,7 @@ import session10.controller.Controller;
 import session10.controller.CustomerController;
 import session10.controller.OrderManagerController;
 import session10.controller.ProductController;
-import session10.entity.Customer;
-import session10.entity.Order;
-import session10.entity.OrderDetail;
-import session10.entity.Product;
+import session10.entity.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,28 +26,7 @@ public class ConsoleUI {
     }
 
 //    Customer
-    private void addCustomer() throws SQLException, IOException {
-        System.out.print("Enter Customer Name: ");
-        String name = reader.readLine();
-        System.out.print("Enter Customer Address: ");
-        String address = reader.readLine();
-        System.out.print("Enter Customer Email: ");
-        String email = reader.readLine();
-        new Controller<Customer>().addEntity("customers", Arrays.asList(null, name, address, email));
-//        Customer customer = new Customer( name, address, email);
-//        Controller<Customer> cusControllerCustomer = new Controller<>();
-//        cusControllerCustomer.add(customer);
-    }
-
-    private void removeCustomer() throws SQLException, IOException {
-        System.out.print("Enter Customer ID: ");
-        int id = Integer.parseInt(reader.readLine());
-        cusController.removeCustomer(id);
-    }
-
-    private void updateCustomer() throws SQLException, IOException {
-        System.out.print("Enter Customer ID: ");
-        int id = Integer.parseInt(reader.readLine());
+    private void addCustomer() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
         System.out.print("Enter Customer Address: ");
@@ -58,12 +34,32 @@ public class ConsoleUI {
         System.out.print("Enter Customer Email: ");
         String email = reader.readLine();
         Customer customer = new Customer(name, address, email);
-        cusController.updateCustomer(id, customer);
+        new Controller<Customer>().addEntity(customer);
+    }
+
+    private void removeCustomer() throws SQLException, IOException, IllegalAccessException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        Customer customer = new Customer(id);
+        new Controller<Customer>().removeEntity(customer);
+    }
+
+    private void updateCustomer() throws SQLException, IOException, IllegalAccessException {
+        System.out.print("Enter Customer ID: ");
+        int id = Integer.parseInt(reader.readLine());
+        System.out.print("Enter Customer Name: ");
+        String name = reader.readLine();
+        System.out.print("Enter Customer Address: ");
+        String address = reader.readLine();
+        System.out.print("Enter Customer Email: ");
+        String email = reader.readLine();
+        Customer customer = new Customer(id, name, address, email);
+        new Controller<Customer>().updateEntity(customer);
     }
 
     private void getAllCustomers() throws SQLException {
 
-        List<Customer> customers = cusController.getAllCustomers();
+        List<Customer> customers = new Controller<Customer>().getAllEntities(new Customer());
         for (Customer c: customers){
             System.out.println("==================");
             System.out.println("Customer ID: " + c.getId());
@@ -305,25 +301,25 @@ public class ConsoleUI {
         });
     }
 
-    private void addProduct() throws SQLException, IOException {
+    private void addProduct() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Product Name: ");
         String name = reader.readLine();
         System.out.print("Enter Product Price: ");
         double price = Double.parseDouble(reader.readLine());
         System.out.print("Enter Product Description: ");
         String description = String.valueOf(reader.read());
-        new Controller<Product>().addEntity("Product", Arrays.asList(null, name, price, description));
-//        Product product = new Product(name, price, description);
-//        productController.addProduct(product);
+        Product product = new Product(name, price, description);
+        new Controller<Product>().addEntity(product);
     }
 
-    private void removeProduct() throws SQLException, IOException {
+    private void removeProduct() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Product ID: ");
         int id = Integer.parseInt(reader.readLine());
-        productController.removeProduct(id);
+        Product product = new Product(id);
+        new Controller<Product>().removeEntity(product);
     }
 
-    private void updateProduct() throws SQLException, IOException {
+    private void updateProduct() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Product ID: ");
         int id = Integer.parseInt(reader.readLine());
         System.out.print("Enter Product Name: ");
@@ -332,13 +328,14 @@ public class ConsoleUI {
         double price = Double.parseDouble(reader.readLine());
         System.out.print("Enter Product Description: ");
         String description = String.valueOf(reader.read());
-        Product product = new Product( name, price, description);
-        productController.updateProduct(product, id);
+        Product product = new Product(id, name, price, description);
+        new Controller<Product>().updateEntity(product);
     }
 
     private void getProductById() throws SQLException, IOException {
         System.out.print("Enter Product ID: ");
         int id = Integer.parseInt(reader.readLine());
+
         Product product = productController.getProductByID(id);
         System.out.println("====================");
         System.out.println("Product ID: " + product.getId());

@@ -14,22 +14,32 @@ import java.util.List;
 import java.util.Objects;
 
 public class Controller<T extends Entity<?>> {
-    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-    OrderManagementImpl orderManagement = new OrderManagementImpl();
-    ProductDAOImpl productDAO = new ProductDAOImpl();
+    Model<T> model = new Model<>();
 
-    private T type;
-    public Controller() throws SQLException {
-    }
 
 
 
    public void addEntity(T entity) throws SQLException, IllegalAccessException {
-       new Model<T>().addEntity(entity);
-    }
-    public void removeEntity(T entity) throws SQLException, IllegalAccessException {
-        new Model<T>().removeEntity(entity);
-    }
+       model.addEntity(entity);
+   }
+
+   public void removeEntity(T entity) throws SQLException, IllegalAccessException {
+       boolean rs = model.deleteEntity(entity);
+       if (!rs) {
+           System.err.println("Failed to delete!");
+       }
+   }
+
+   public void updateEntity(T entity) throws SQLException, IllegalAccessException {
+       model.updateEntity(entity);
+   }
+
+   public List<T> getAllEntities(T entity) throws SQLException {
+       return model.getAllEntities(entity);
+   }
+   public List<T> getEntityById(T entity) throws SQLException {
+       return model.getEntityById(entity);
+   }
 
 
 }

@@ -79,3 +79,5 @@ WHERE customerID = 1;
 
 
 INSERT INTO customers VALUES ('Quan', 'Han', 'Abc');
+
+UPDATE customers SET id

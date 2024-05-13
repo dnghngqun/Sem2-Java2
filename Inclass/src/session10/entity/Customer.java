@@ -15,6 +15,16 @@ public class Customer extends Entity<Integer> {
         this.email = email;
     }
 
+    public Customer(int id) {
+        this.setId(id);
+    }
+
+    public Customer(int id, String name, String address, String email) {
+        this.setId(id);
+        this.name = name;
+        this.address = address;
+        this.email = email;
+    }
 
 
     public void setName(String name) {

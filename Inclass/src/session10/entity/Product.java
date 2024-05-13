@@ -14,6 +14,16 @@ public class Product extends Entity <Integer>{
     public Product() {
     }
 
+    public Product(int id) {
+        this.setId(id);
+    }
+
+    public Product(int id, String name, double price, String description) {
+        this.setId(id);
+        this.ProductName = name;
+        this.Price = price;
+        this.description = description;
+    }
 
 
     public void setProductName(String productName) {
