@@ -7,8 +7,8 @@ public class OrderDetail extends Entity<Integer>{
     private double unitPrice;
     private double discount = 0;
     private double totalPrice;
-//    private String customerName;
-//    private String productName;
+    private String customerName;
+    private String productName;
 
 
     public void setDiscount(double discount) {
@@ -71,4 +71,19 @@ public class OrderDetail extends Entity<Integer>{
         return totalPrice = unitPrice * quantity - unitPrice * discount;
     }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
 }

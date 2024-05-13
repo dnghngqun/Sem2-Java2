@@ -1,17 +1,13 @@
 package session10.controller;
 
-import session10.entity.Customer;
 import session10.entity.Entity;
+import session10.entity.Order;
 import session10.entity.OrderDetail;
-import session10.entity.Product;
-import session10.model.CustomerDAOImpl;
 import session10.model.Model;
-import session10.model.OrderManagementImpl;
-import session10.model.ProductDAOImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller<T extends Entity<?>> {
     Model<T> model = new Model<>();
@@ -37,9 +33,59 @@ public class Controller<T extends Entity<?>> {
    public List<T> getAllEntities(T entity) throws SQLException {
        return model.getAllEntities(entity);
    }
-   public List<T> getEntityById(T entity) throws SQLException {
+   public T getEntityById(T entity) throws SQLException {
        return model.getEntityById(entity);
    }
 
+   public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException {
+       return model.getAllEntitiesByName(entity);
+   }
+
+    public void addOrder(Order order, List<OrderDetail> orderDetail) throws SQLException {
+        for(OrderDetail od: orderDetail){
+            od.setTotalPrice((od.getUnitPrice() - od.getUnitPrice() * od.getDiscount())* od.getQuantity());
+        }
+        model.addOrder(order, orderDetail);
+    }
+
+    public List<Order> getOrdersByCustomerId(int customerId) throws SQLException {
+        return model.getOrdersByCustomerId(customerId);
+    }
+
+    public List<OrderDetail> showOrderDetailsByCustomerID(int id) throws SQLException {
+        return model.showOrderDetailsByCustomerID(id);
+    }
+
+    public double getTotalPriceByCustomerId(int id) throws SQLException {
+        return model.getTotalPriceByCustomerId(id);
+    }
+
+    public boolean updateOrderStatus(int orderId, int status) throws SQLException {
+        Order order = new Order();
+        order.convertStatus(status);
+        System.out.println("Test: " + order.getStatus());
+
+        boolean result = model.updateOrderStatus(orderId, order.getStatus());
+        if(result) {
+            System.out.println("Order with ID " + orderId + " has been successfully updated.");
+            return true;
+        }else {
+            System.out.println("Failed to update order with ID " + orderId + ".");
+            System.out.println("Please try again.");
+            return false;
+        }
+
+    }
+
+    public boolean deleteOrder(int id) throws SQLException {
+        boolean result = model.deleteOrder(id);
+        if(result){
+            System.out.println("Order with ID " + id + " has been successfully removed.");
+            return true;
+        }else {
+            System.out.println("Failed to remove order with ID " + id + ".");
+            return false;
+        }
+    }
 
 }

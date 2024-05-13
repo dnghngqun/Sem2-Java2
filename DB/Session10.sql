@@ -19,10 +19,10 @@ CREATE TABLE Order_table(
 );
 
 CREATE TABLE Product(
-    ProductID INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     ProductName VARCHAR(255) NOT NULL ,
     Price DOUBLE NOT NULL ,
-    Description VARCHAR(255)
+    description VARCHAR(255)
 );
 
 CREATE TABLE OrderDetail(
@@ -34,7 +34,7 @@ CREATE TABLE OrderDetail(
     discount DOUBLE DEFAULT 0,
     totalPrice DOUBLE NOT NULL,
     CONSTRAINT orderID FOREIGN KEY (orderID) REFERENCES Order_table(id),
-    CONSTRAINT productID FOREIGN KEY (productID) REFERENCES Product(ProductID)
+    CONSTRAINT productID FOREIGN KEY (productID) REFERENCES Product(id)
 );
 
 DROP TABLE customers;
@@ -70,7 +70,7 @@ SELECT od.id AS Order_Detail_ID,
 FROM OrderDetail od
 INNER JOIN Order_table o on od.orderID = o.id
 INNER JOIN customers c on o.customerID = c.id
-INNER JOIN Product p on od.productID = p.ProductID
+INNER JOIN Product p on od.productID = p.id
 WHERE orderID = 1;
 
 SELECT totalPrice FROM OrderDetail od
@@ -80,4 +80,12 @@ WHERE customerID = 1;
 
 INSERT INTO customers VALUES ('Quan', 'Han', 'Abc');
 
-UPDATE customers SET id
+SELECT o.id AS OrderID,
+            o.orderDate,
+            o.totalAmount,
+            o.status
+            FROM Order_table o
+            WHERE o.customerID = ?;
+
+UPDATE Order_table SET status = '?' WHERE id = ?;
+SELECT * FROM Order_table;

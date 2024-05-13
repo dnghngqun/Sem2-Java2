@@ -1,27 +1,20 @@
 package session10.view;
 
 import session10.controller.Controller;
-import session10.controller.CustomerController;
-import session10.controller.OrderManagerController;
-import session10.controller.ProductController;
 import session10.entity.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class ConsoleUI {
     private final BufferedReader reader;
-    CustomerController cusController = new CustomerController();
-    ProductController productController = new ProductController();
-//    OrderController orderController = new OrderController();
-    OrderManagerController orderManager = new OrderManagerController();
-    public ConsoleUI() throws SQLException {
+    public ConsoleUI() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
@@ -72,7 +65,7 @@ public class ConsoleUI {
     private void getCustomerById() throws SQLException, IOException {
         System.out.print("Enter Customer ID: ");
         int id = Integer.parseInt(reader.readLine());
-        Customer customer = cusController.getCustomerById(id);
+        Customer customer = new Controller<Customer>().getEntityById(new Customer(id));
         System.out.println("=================");
         System.out.println("Customer ID: " + customer.getId());
         System.out.println("Customer Name: " + customer.getName());
@@ -80,10 +73,10 @@ public class ConsoleUI {
         System.out.println("Customer Email: " + customer.getEmail());
     }
 
-    private void getCustomerByName() throws SQLException, IOException {
+    private void getCustomerByName() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
-        List<Customer> customers = cusController.getCustomersByName(name);
+        List<Customer> customers = new Controller<Customer>().getAllEntitiesByName(new Customer(name));
         for (Customer c: customers){
             System.out.println("Customer ID: " + c.getId());
             System.out.println("Customer Name: " + c.getName());
@@ -102,8 +95,7 @@ public class ConsoleUI {
         System.out.println("6. Get customer by name");
         System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
-        int choice = Integer.parseInt(reader.readLine());
-        return choice;
+        return Integer.parseInt(reader.readLine());
     }
 
 //    Order
@@ -117,11 +109,10 @@ public class ConsoleUI {
         System.out.println("6. Get Order by customer ID");
         System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
-        int choice = Integer.parseInt(reader.readLine());
-        return choice;
+        return Integer.parseInt(reader.readLine());
     }
 
-    private void choice3() throws IOException, SQLException {
+    private void choice3() throws IOException, SQLException, IllegalAccessException {
         while (true) {
             int choice = menuOrder();
             switch (choice) {
@@ -156,9 +147,10 @@ public class ConsoleUI {
 
         System.out.print("Enter Customer ID: ");
         int customerId = Integer.parseInt(reader.readLine());
-        Order order = new Order(customerId);
+        int status = 1;//default status is pending
+        Order order = new Order(customerId, status);
         int i = 0;
-        ArrayList <OrderDetail> orderDetails = new ArrayList<>();
+        List <OrderDetail> orderDetails = new ArrayList<>();
         while (true) {
             i++;
             System.out.println("Enter order details " + i);
@@ -184,11 +176,11 @@ public class ConsoleUI {
                 }
             }
         }
-        orderManager.addOrder(order, orderDetails);
+        new Controller<>().addOrder(order, orderDetails);
 
     }
 
-    private void updateOrder() throws SQLException, IOException{
+    private void updateOrder() throws SQLException, IOException, IllegalAccessException {
         System.out.print("Enter Order ID: ");
         int OrderId = Integer.parseInt(reader.readLine());
         System.out.print("Enter Customer ID: ");
@@ -197,22 +189,17 @@ public class ConsoleUI {
         double totalAmount = Double.parseDouble(reader.readLine());
         System.out.print("Enter Order Status (0: Cancelled 1: Pending 2: Completed): ");
         int status = Integer.parseInt(reader.readLine());
-        Order order = new Order(OrderId, customerId, totalAmount, status);
-        boolean result = orderManager.updateOrder(order);
-        if(!result){
-            System.out.println("Error updating order status");
-            System.out.println("Please try again");
-            updateOrder();
-        }
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        Order order = new Order(OrderId, customerId, date , totalAmount, status);
+        new Controller<Order>().updateEntity(order);
     }
 
     private void updateOrderStatus() throws SQLException, IOException{
-
         System.out.print("Enter Order ID: ");
         int OrderId = Integer.parseInt(reader.readLine());
         System.out.print("Enter Order Status (0: Cancelled 1: Pending 2: Completed): ");
         int status = Integer.parseInt(reader.readLine());
-        boolean result = orderManager.updateOrderStatus(OrderId, status);
+        boolean result = new Controller<>().updateOrderStatus(OrderId, status);
         if(!result){
             System.out.println("Error updating order status");
             System.out.println("Please try again");
@@ -220,42 +207,41 @@ public class ConsoleUI {
         }
     }
 
-    private void deleteOrder() throws SQLException, IOException{
+    private void deleteOrder() throws SQLException, IOException {
         System.out.print("Enter Order ID: ");
         int OrderId = Integer.parseInt(reader.readLine());
-        boolean result = orderManager.deleteOrder(OrderId);
-        if(!result){
-            System.out.println("Error deleting order");
-            System.out.println("Please try again");
-            deleteOrder();
-        }
+        new Controller<>().deleteOrder(OrderId);
     }
 
     private void getAllOrders() throws SQLException {
-        List<Order> orders = orderManager.getAllOrders();
+        List<Order> orders = new Controller<Order>().getAllEntities(new Order());
         for (Order o: orders){
             System.out.println("Order ID: " + o.getId());
             System.out.println("Customer ID: " + o.getCustomerId());
             System.out.println("Total Amount: " + o.getTotalAmount());
-            System.out.println("Order Status: " + o.getStatusString());
+            System.out.println("Order Status: " + o.getStatus());
         }
     }
 
     private void getOrderById() throws SQLException, IOException {
         System.out.print("Enter Order ID: ");
         int OrderId = Integer.parseInt(reader.readLine());
-        Order order = orderManager.getOrderById(OrderId);
+        Order order = new Controller<Order>().getEntityById(new Order(OrderId));
         System.out.println("Order ID: " + order.getId());
         System.out.println("Customer ID: " + order.getCustomerId());
+        System.out.println("Total Amount: " + order.getTotalAmount());
+        System.out.println("Order Status: " + order.getStatus());
     }
 
     private void getOrderByCustomerId() throws SQLException, IOException {
         System.out.print("Enter Customer ID: ");
         int customerId = Integer.parseInt(reader.readLine());
-        List<Order> orders = orderManager.getOrdersByCustomerId(customerId);
+        List<Order> orders =new Controller<>().getOrdersByCustomerId(customerId);
         for (Order o: orders){
             System.out.println("Order ID: " + o.getId());
-            System.out.println("Customer ID: " + o.getCustomerId());
+            System.out.println("Order Date: " + o.getOrderDate());
+            System.out.println("Total Amount: " + o.getTotalAmount());
+            System.out.println("Order Status: " + o.getStatus());
         }
     }
 
@@ -264,7 +250,7 @@ public class ConsoleUI {
     private void showOrderDetailsByCustomerID() throws SQLException, IOException{
         System.out.print("Enter Customer ID: ");
         int id = Integer.parseInt(reader.readLine());
-        ArrayList<OrderDetail> orders = orderManager.showOrderDetailsByCustomerID(id);
+        List<OrderDetail> orders = new Controller<>().showOrderDetailsByCustomerID(id);
         for (OrderDetail o: orders){
             System.out.println("===================");
             System.out.println("Order Detail ID: " + o.getId());
@@ -282,16 +268,17 @@ public class ConsoleUI {
     private void getTotalPriceByCustomerId() throws SQLException, IOException{
         System.out.print("Enter Customer ID: ");
         int id = Integer.parseInt(reader.readLine());
-        double total = orderManager.getTotalPriceByCustomerId(id);
+        double total = new Controller<>().getTotalPriceByCustomerId(id);
         System.out.println("Total price: " + total);
     }
 
 //    Product
     private void getAllProducts() throws SQLException {
-        ArrayList<Product> products = productController.getAllProducts();
-
-        //lambda expression
-        //nếu chỉ 1 biến có thể bỏ bớt ngoặc tròn
+        List<Product> products = new Controller<Product>().getAllEntities(new Product());
+        /*
+        lambda expression
+        nếu chỉ 1 biến có thể bỏ bớt ngoặc tròn
+        */
         products.forEach((product) ->{
             System.out.println("====================");
             System.out.println("Product ID: " + product.getId());
@@ -307,7 +294,7 @@ public class ConsoleUI {
         System.out.print("Enter Product Price: ");
         double price = Double.parseDouble(reader.readLine());
         System.out.print("Enter Product Description: ");
-        String description = String.valueOf(reader.read());
+        String description = reader.readLine();
         Product product = new Product(name, price, description);
         new Controller<Product>().addEntity(product);
     }
@@ -335,8 +322,7 @@ public class ConsoleUI {
     private void getProductById() throws SQLException, IOException {
         System.out.print("Enter Product ID: ");
         int id = Integer.parseInt(reader.readLine());
-
-        Product product = productController.getProductByID(id);
+        Product product = new Controller<Product>().getEntityById(new Product(id));
         System.out.println("====================");
         System.out.println("Product ID: " + product.getId());
         System.out.println("Product Name: " + product.getProductName());
@@ -344,10 +330,10 @@ public class ConsoleUI {
         System.out.println("Product Description: " + product.getDescription());
     }
 
-    private void getProductByName() throws SQLException, IOException {
-        System.out.println("Enter Product Name: ");
+    private void getProductByName() throws SQLException, IOException, IllegalAccessException {
+        System.out.print("Enter Product Name: ");
         String name = reader.readLine();
-        ArrayList<Product> products = productController.getProductsByName(name);
+        List<Product> products =new Controller<Product>().getAllEntitiesByName(new Product(name));
         if(products.isEmpty()){
             System.out.println("Product not found!");
         }else {
@@ -371,12 +357,11 @@ public class ConsoleUI {
         System.out.println("6. Update status for orders");
         System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
-        int choice = Integer.parseInt(reader.readLine());
-        return choice;
+        return Integer.parseInt(reader.readLine());
     }
 
 
-    private void choice1() throws IOException, SQLException {
+    private void choice1() throws IOException, SQLException, IllegalAccessException {
         while (true) {
             int choice = menuCustomer();
             switch (choice) {
@@ -417,11 +402,10 @@ public class ConsoleUI {
         System.out.println("6. Get Product By Name");
         System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
-        int choice = Integer.parseInt(reader.readLine());;
-        return choice ;
+        return Integer.parseInt(reader.readLine());
     }
 
-    private void choice2() throws IOException, SQLException {
+    private void choice2() throws IOException, SQLException, IllegalAccessException {
         while (true) {
             int choice = menuProduct();
             switch (choice) {
@@ -453,7 +437,7 @@ public class ConsoleUI {
     }
 
 
-    public void start() throws IOException, SQLException {
+    public void start() throws IOException, SQLException, IllegalAccessException {
         while (true) {
             int choice = menu();
             switch (choice) {

@@ -25,6 +25,10 @@ public class Product extends Entity <Integer>{
         this.description = description;
     }
 
+    public Product(String name) {
+        this.ProductName = name;
+    }
+
 
     public void setProductName(String productName) {
         ProductName = productName;
