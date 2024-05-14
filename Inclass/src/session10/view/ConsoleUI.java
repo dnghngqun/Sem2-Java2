@@ -209,7 +209,10 @@ public class ConsoleUI {
     private void deleteOrder() throws SQLException, IOException {
         System.out.print("Enter Order ID: ");
         int OrderId = Integer.parseInt(reader.readLine());
-        new Controller<>().deleteOrder(OrderId);
+        boolean result = new Controller<>().deleteOrder(OrderId);
+        if(!result){
+            System.out.println("Error deleting order");
+        }
     }
 
     private void getAllOrders() throws SQLException {

@@ -6,22 +6,15 @@ public class Order extends  Entity<Integer>{
     private int customerId;
     private Date orderDate;
     private double totalAmount;
-//    private int status;
     private String status;
-//    private String customerName;
 
-//    public void setCustomerName(String customerName) {
-//        this.customerName = customerName;
-//    }
 
     public Order(int customerId) {
         this.customerId = customerId;
     }
 
 
-//    public String getCustomerName() {
-//        return customerName;
-//    }
+
 
 
     public Order(int customerId, int StatusNumber) {
@@ -37,26 +30,6 @@ public class Order extends  Entity<Integer>{
         convertStatus(statusNumber);
     }
 
-//    public Order(int id, int customerId, int statusNumber) {
-//        this.setId(id);
-//        this.customerId = customerId;
-//        convertStatus(statusNumber);
-//    }
-
-//    public Order(int id, int customerId, double totalAmount, int statusNumber) {
-//        this.setId(id);
-//        this.customerId = customerId;
-//        this.totalAmount = totalAmount;
-//        convertStatus(statusNumber);
-//    }
-
-//    public Order(int id, int customerId, Timestamp orderDate, double totalAmount, String status) {
-//        this.setId(id);
-//        this.customerId = customerId;
-//        this.orderDate = orderDate;
-//        this.totalAmount = totalAmount;
-//        this.status = status;
-//    }
 
     public Order() {
     }

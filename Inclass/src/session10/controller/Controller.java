@@ -6,7 +6,6 @@ import session10.entity.OrderDetail;
 import session10.model.Model;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller<T extends Entity<?>> {
@@ -83,7 +82,6 @@ public class Controller<T extends Entity<?>> {
             System.out.println("Order with ID " + id + " has been successfully removed.");
             return true;
         }else {
-            System.out.println("Failed to remove order with ID " + id + ".");
             return false;
         }
     }
