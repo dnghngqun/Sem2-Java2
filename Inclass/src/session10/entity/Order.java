@@ -1,6 +1,5 @@
 package session10.entity;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class Order extends  Entity<Integer>{
@@ -38,26 +37,26 @@ public class Order extends  Entity<Integer>{
         convertStatus(statusNumber);
     }
 
-    public Order(int id, int customerId, int statusNumber) {
-        this.setId(id);
-        this.customerId = customerId;
-        convertStatus(statusNumber);
-    }
+//    public Order(int id, int customerId, int statusNumber) {
+//        this.setId(id);
+//        this.customerId = customerId;
+//        convertStatus(statusNumber);
+//    }
 
-    public Order(int id, int customerId, double totalAmount, int statusNumber) {
-        this.setId(id);
-        this.customerId = customerId;
-        this.totalAmount = totalAmount;
-        convertStatus(statusNumber);
-    }
+//    public Order(int id, int customerId, double totalAmount, int statusNumber) {
+//        this.setId(id);
+//        this.customerId = customerId;
+//        this.totalAmount = totalAmount;
+//        convertStatus(statusNumber);
+//    }
 
-    public Order(int id, int customerId, Timestamp orderDate, double totalAmount, String status) {
-        this.setId(id);
-        this.customerId = customerId;
-        this.orderDate = orderDate;
-        this.totalAmount = totalAmount;
-        this.status = status;
-    }
+//    public Order(int id, int customerId, Timestamp orderDate, double totalAmount, String status) {
+//        this.setId(id);
+//        this.customerId = customerId;
+//        this.orderDate = orderDate;
+//        this.totalAmount = totalAmount;
+//        this.status = status;
+//    }
 
     public Order() {
     }
