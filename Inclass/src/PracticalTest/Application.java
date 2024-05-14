@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Application {
 
@@ -33,6 +35,20 @@ public class Application {
         String email = reader.readLine();
         System.out.print("Enter contact phone number: ");
         String phoneNumber = reader.readLine();
+        //^: bắt đầu chuỗi
+        //[+]?: dấu + có thể có hoặc ko
+        //\d : định dạng số
+        //{10,15}: 10 đến 15 số
+        String regex = "^[+]?\\d{10,15}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        while (!matcher.matches()) {
+            System.out.println("Invalid phone number!");
+            System.out.println("Please enter a valid phone number!");
+            System.out.print("Enter contact phone number again: ");
+            phoneNumber = reader.readLine();
+            matcher = pattern.matcher(phoneNumber);
+        }
         addressBookImpl.addContact(name, company, email, phoneNumber);
         System.out.println("Contact added successfully!");
     }
