@@ -169,7 +169,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         while (rs.next()) {
             try {
                 return distinguishClassResultSet(rs, entity.getClass());
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | InstantiationException | NoSuchFieldException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -189,7 +189,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         while (rs.next()) {
             try {
                 entities.add(distinguishClassResultSet(rs, entity.getClass()));
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | InstantiationException | NoSuchFieldException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -197,7 +197,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
     }
 
     @Override
-    public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException {
+    public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException, NoSuchFieldException {
         if(!entities.isEmpty()) entities.clear();
         String tableName = getTableName(entity.getClass());
         StringBuilder sql = new StringBuilder();
@@ -207,7 +207,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         Field field = null;
         try {
             field = entity.getClass().getDeclaredField("name");
-            
+
         } catch (Exception e) {
             try {
                 field = entity.getClass().getDeclaredField("ProductName");
@@ -230,14 +230,27 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         return entities;
     }
 
-    private T distinguishClassResultSet(ResultSet rs, Class<?> entityClass) throws SQLException, IllegalAccessException {
-        return switch (entityClass.getSimpleName()) {
-            case "Customer" -> (T) setValueCustomer(rs);
-            case "Product" -> (T) setValueProduct(rs);
-            case "OrderDetail" -> (T) setValueOrderDetail(rs);
-            case "Order" -> (T) setValueOrder(rs);
-            default -> null;
-        };
+//    private T distinguishClassResultSet(ResultSet rs, Class<?> entityClass) throws SQLException, IllegalAccessException {
+//        return switch (entityClass.getSimpleName()) {
+//            case "Customer" -> (T) setValueCustomer(rs);
+//            case "Product" -> (T) setValueProduct(rs);
+//            case "OrderDetail" -> (T) setValueOrderDetail(rs);
+//            case "Order" -> (T) setValueOrder(rs);
+//            default -> null;
+//        };
+//    }
+    private T distinguishClassResultSet(ResultSet rs, Class<?> entityClass) throws SQLException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+        T newEntity = (T) entityClass.newInstance();
+        //get field id in extend class
+        Field fieldID = entityClass.getSuperclass().getDeclaredField("id");
+        fieldID.setAccessible(true);
+        fieldID.set(newEntity, rs.getInt("id"));
+        for (Field field : entityClass.getDeclaredFields()) {
+            field.setAccessible(true);
+
+            field.set(newEntity, rs.getObject(field.getName()));
+        }
+        return newEntity;
     }
 
     private String getTableName(Class<?> entityClass) {
@@ -252,46 +265,46 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         };
 
     }
-
-    public Customer setValueCustomer(ResultSet rs) throws SQLException {
-        Customer customer = new Customer();
-        customer.setId(rs.getInt("id"));
-        customer.setName(rs.getString("name"));
-        customer.setAddress(rs.getString("address"));
-        customer.setEmail(rs.getString("email"));
-        return customer;
-    }
-
-    public Product setValueProduct(ResultSet rs) throws SQLException {
-        Product product = new Product();
-        product.setId(rs.getInt("id"));
-        product.setProductName(rs.getString("ProductName"));
-        product.setPrice(rs.getDouble("Price"));
-        product.setDescription(rs.getString("description"));
-        return product;
-    }
-
-    public Order setValueOrder(ResultSet rs) throws SQLException {
-        Order order = new Order();
-        order.setId(rs.getInt("id"));
-        order.setCustomerId(rs.getInt("customerID"));
-        order.setOrderDate(rs.getDate("orderDate"));
-        order.setTotalAmount(rs.getDouble("totalAmount"));
-        order.setStatus(rs.getString("status"));
-        return order;
-    }
-
-    public OrderDetail setValueOrderDetail(ResultSet rs) throws SQLException {
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setId(rs.getInt("id"));
-        orderDetail.setOrderId(rs.getInt("orderID"));
-        orderDetail.setProductId(rs.getInt("productID"));
-        orderDetail.setQuantity(rs.getInt("quantity"));
-        orderDetail.setUnitPrice(rs.getDouble("unitPrice"));
-        orderDetail.setDiscount(rs.getDouble("discount"));
-        orderDetail.setTotalPrice(rs.getDouble("totalPrice"));
-        return orderDetail;
-    }
+//
+//    public Customer setValueCustomer(ResultSet rs) throws SQLException {
+//        Customer customer = new Customer();
+//        customer.setId(rs.getInt("id"));
+//        customer.setName(rs.getString("name"));
+//        customer.setAddress(rs.getString("address"));
+//        customer.setEmail(rs.getString("email"));
+//        return customer;
+//    }
+//
+//    public Product setValueProduct(ResultSet rs) throws SQLException {
+//        Product product = new Product();
+//        product.setId(rs.getInt("id"));
+//        product.setProductName(rs.getString("ProductName"));
+//        product.setPrice(rs.getDouble("Price"));
+//        product.setDescription(rs.getString("description"));
+//        return product;
+//    }
+//
+//    public Order setValueOrder(ResultSet rs) throws SQLException {
+//        Order order = new Order();
+//        order.setId(rs.getInt("id"));
+//        order.setCustomerId(rs.getInt("customerID"));
+//        order.setOrderDate(rs.getDate("orderDate"));
+//        order.setTotalAmount(rs.getDouble("totalAmount"));
+//        order.setStatus(rs.getString("status"));
+//        return order;
+//    }
+//
+//    public OrderDetail setValueOrderDetail(ResultSet rs) throws SQLException {
+//        OrderDetail orderDetail = new OrderDetail();
+//        orderDetail.setId(rs.getInt("id"));
+//        orderDetail.setOrderId(rs.getInt("orderID"));
+//        orderDetail.setProductId(rs.getInt("productID"));
+//        orderDetail.setQuantity(rs.getInt("quantity"));
+//        orderDetail.setUnitPrice(rs.getDouble("unitPrice"));
+//        orderDetail.setDiscount(rs.getDouble("discount"));
+//        orderDetail.setTotalPrice(rs.getDouble("totalPrice"));
+//        return orderDetail;
+//    }
 
     public void addOrder(Order order, List<OrderDetail> orderDetail) throws SQLException {
         conn.setAutoCommit(false);

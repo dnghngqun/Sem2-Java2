@@ -72,7 +72,7 @@ public class ConsoleUI {
         System.out.println("Customer Email: " + customer.getEmail());
     }
 
-    private void getCustomerByName() throws SQLException, IOException, IllegalAccessException {
+    private void getCustomerByName() throws SQLException, IOException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         System.out.print("Enter Customer Name: ");
         String name = reader.readLine();
         List<Customer> customers = new Controller<Customer>().getAllEntitiesByName(new Customer(name));
@@ -111,7 +111,7 @@ public class ConsoleUI {
         return Integer.parseInt(reader.readLine());
     }
 
-    private void choice3() throws IOException, SQLException, IllegalAccessException {
+    private void choice3() throws IOException, SQLException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         while (true) {
             int choice = menuOrder();
             switch (choice) {
@@ -332,7 +332,7 @@ public class ConsoleUI {
         System.out.println("Product Description: " + product.getDescription());
     }
 
-    private void getProductByName() throws SQLException, IOException, IllegalAccessException {
+    private void getProductByName() throws SQLException, IOException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         System.out.print("Enter Product Name: ");
         String name = reader.readLine();
         List<Product> products =new Controller<Product>().getAllEntitiesByName(new Product(name));
@@ -363,7 +363,7 @@ public class ConsoleUI {
     }
 
 
-    private void choice1() throws IOException, SQLException, IllegalAccessException {
+    private void choice1() throws IOException, SQLException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         while (true) {
             int choice = menuCustomer();
             switch (choice) {
@@ -407,7 +407,7 @@ public class ConsoleUI {
         return Integer.parseInt(reader.readLine());
     }
 
-    private void choice2() throws IOException, SQLException, IllegalAccessException {
+    private void choice2() throws IOException, SQLException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         while (true) {
             int choice = menuProduct();
             switch (choice) {
@@ -439,7 +439,7 @@ public class ConsoleUI {
     }
 
 
-    public void start() throws IOException, SQLException, IllegalAccessException {
+    public void start() throws IOException, SQLException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         while (true) {
             int choice = menu();
             switch (choice) {

@@ -36,7 +36,7 @@ public class Controller<T extends Entity<?>> {
        return model.getEntityById(entity);
    }
 
-   public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException {
+   public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException, InstantiationException, NoSuchFieldException {
        return model.getAllEntitiesByName(entity);
    }
 
