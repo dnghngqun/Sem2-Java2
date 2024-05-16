@@ -197,7 +197,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
     }
 
     @Override
-    public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException, NoSuchFieldException {
+    public List<T> getAllEntitiesByName(T entity) throws SQLException, IllegalAccessException, NoSuchFieldException, InstantiationException {
         if(!entities.isEmpty()) entities.clear();
         String tableName = getTableName(entity.getClass());
         StringBuilder sql = new StringBuilder();

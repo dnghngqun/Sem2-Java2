@@ -13,5 +13,5 @@ public interface ModelDAO<T> {
     boolean deleteEntity(T entity ) throws SQLException;
     T getEntityById(T entity) throws SQLException;
     List<T> getAllEntities(T entity) throws SQLException;
-    List<T> getAllEntitiesByName(T entity) throws SQLException, NoSuchFieldException, IllegalAccessException;
+    List<T> getAllEntitiesByName(T entity) throws SQLException, NoSuchFieldException, IllegalAccessException, InstantiationException;
 }
