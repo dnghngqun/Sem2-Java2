@@ -379,6 +379,7 @@ public class Model <T extends Entity<?>> implements ModelDAO<T>{
         return list;
     }
 
+
     public List<OrderDetail> showOrderDetailsByCustomerID(int id) throws SQLException {
         pstm = conn.prepareStatement(SQL_GET_ORDER_DETAIL_BY_CUSTOMER_ID);
         pstm.setInt(1, id);
