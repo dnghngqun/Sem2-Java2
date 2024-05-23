@@ -89,3 +89,12 @@ SELECT o.id AS OrderID,
 
 UPDATE Order_table SET status = '?' WHERE id = ?;
 SELECT * FROM Order_table;
+
+CREATE TABLE employee(
+  id int primary key ,
+  name varchar(255),
+  address varchar(255),
+  age int
+);
+
+insert into  employee values (1, 'Dang hong quan', 'Hnoi', 18);
