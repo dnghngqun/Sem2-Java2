@@ -18,11 +18,13 @@ public class Write_Json_simple {
         employee.put("id", 1);
         employee.put("name", "John");
         employee.put("age", 25);
+        employee.put("email", "example@gmail.com");
        //tạo đối tượng address
         JsonObject address = new JsonObject();
         address.put("street", "123 Main Street");
         address.put("city", "Hnoi");
         address.put("state", "CA");
+
 
         //thêm địa chỉ cho nhân viên
         employee.put("address", address);
@@ -37,9 +39,12 @@ public class Write_Json_simple {
         p2.put("title", "Push sale");
         p2.put("budget", 12000);
 
+        JsonObject p3 = new JsonObject();
+        p3.put("title", "Push sale");
+        p3.put("budget", 12000);
 
-        //them 2 obj vaof jsonArray
-        projects.addAll(Arrays.asList(p1,p2));
+        //them 3 obj vaof jsonArray
+        projects.addAll(Arrays.asList(p1,p2, p3));
 
         //add prj to employee
         employee.put("projects", projects);

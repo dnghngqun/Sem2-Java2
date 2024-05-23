@@ -18,7 +18,7 @@ public class Read_Json_simple {
         BigDecimal id = (BigDecimal) parser.get("id");
         String name = (String) parser.get("name");
         BigDecimal age = (BigDecimal) parser.get("age");
-      String email = (String) parser.get("email");
+        String email = (String) parser.get("email");
         System.out.println(id);
         System.out.println(name);
         System.out.println(age);
