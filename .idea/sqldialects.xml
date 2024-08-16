@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/../C#/Csharp.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DB/Session10.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DB/Session8.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/DB/Session9.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/Inclass/JsonExample/src/PracticalTest/DbQuery.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/../PrjSem2-Back/DBPrj.sql" dialect="MariaDB" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>
